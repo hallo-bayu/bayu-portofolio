@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-Commerce Portfolio — Bayu Fadillah Akbar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#fcfcfa;--text:#111;--border:rgba(0,0,0,0.08);--serif:'Playfair Display',serif;--sans:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}body{background:var(--bg);color:var(--text);font-family:var(--sans);cursor:none;overflow-x:hidden;}a{text-decoration:none;color:inherit;}
+#cur{position:fixed;width:10px;height:10px;background:#111;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(0,0,0,0.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(252,252,250,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;}
+.nav-logo{font-family:var(--sans);font-size:0.95rem;font-weight:500;}.nav-logo em{font-style:italic;color:#999;}
+.nav-cats{display:flex;gap:6px;}.nav-cat{font-family:var(--sans);font-size:0.75rem;font-weight:500;padding:6px 16px;border-radius:100px;border:1px solid var(--border);background:#fff;color:#888;cursor:pointer;transition:all .2s;}.nav-cat:hover,.nav-cat.active{background:#111;color:#fff;border-color:#111;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.8rem;font-weight:500;color:#666;transition:color .2s;}.nav-back:hover{color:#111;}.nav-back svg{width:16px;height:16px;}
+.page-hero{padding:120px 5vw 60px;position:relative;z-index:1;max-width:1280px;margin:0 auto;}
+.page-hero-label{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:0.68rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:#bbb;margin-bottom:16px;}
+.page-hero-label::before{content:'';display:inline-block;width:24px;height:1px;background:#ccc;}
+.page-hero h1{font-family:var(--serif);font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin-bottom:20px;}
+.page-hero h1 em{font-style:italic;}.page-hero-desc{font-family:var(--sans);font-size:0.95rem;font-weight:300;color:#888;line-height:1.8;max-width:520px;}
+.page-hero-stats{display:flex;gap:32px;margin-top:32px;}.stat-item .num{font-family:var(--serif);font-size:2rem;font-weight:700;font-style:italic;}.stat-item .lbl{font-family:var(--sans);font-size:0.72rem;color:#bbb;margin-top:2px;}
+
+/* Platform cards */
+.platforms-section{max-width:1280px;margin:0 auto;padding:0 5vw 50px;position:relative;z-index:1;}
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.platform-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+.platform-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.08);}
+.platform-icon{font-size:2.5rem;margin-bottom:14px;}
+.platform-name{font-family:var(--serif);font-size:1.4rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px;}
+.platform-desc{font-family:var(--sans);font-size:0.82rem;font-weight:300;color:#888;line-height:1.7;margin-bottom:16px;}
+.platform-stats{display:flex;gap:16px;}
+.pstat .pnum{font-family:var(--serif);font-size:1.2rem;font-weight:700;font-style:italic;}.pstat .plbl{font-family:var(--sans);font-size:0.65rem;color:#bbb;}
+
+/* Services */
+.services-section{max-width:1280px;margin:0 auto;padding:0 5vw 50px;position:relative;z-index:1;}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:32px;}
+.section-title em{font-style:italic;}
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.service-item{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;align-items:flex-start;gap:16px;transition:all .3s;box-shadow:0 2px 6px rgba(0,0,0,0.03);}
+.service-item:hover{transform:translateX(6px);border-color:rgba(0,0,0,0.14);}
+.service-check{width:36px;height:36px;border-radius:50%;background:#f4f4f2;border:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.service-info .si-title{font-family:var(--sans);font-size:0.9rem;font-weight:500;margin-bottom:4px;}
+.service-info .si-desc{font-family:var(--sans);font-size:0.78rem;font-weight:300;color:#aaa;line-height:1.6;}
+
+/* Results */
+.results-section{max-width:1280px;margin:0 auto;padding:0 5vw 80px;position:relative;z-index:1;}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07);border-radius:16px;overflow:hidden;}
+.result-box{background:#fff;padding:28px 24px;}
+.result-num{font-family:var(--serif);font-size:2.4rem;font-weight:700;font-style:italic;margin-bottom:4px;}
+.result-lbl{font-family:var(--sans);font-size:0.75rem;color:#bbb;line-height:1.5;}
+
+.page-cta{max-width:1280px;margin:0 auto;padding:60px 5vw 100px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);position:relative;z-index:1;}
+.page-cta h2{font-family:var(--serif);font-size:clamp(1.8rem,3vw,3rem);font-weight:700;letter-spacing:-0.02em;}.page-cta h2 em{font-style:italic;}
+.btn-black{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.85rem;font-weight:500;background:#111;color:#fff;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;transition:all .25s;}.btn-black:hover{background:#333;transform:translateY(-2px);}.btn-black svg{width:14px;height:14px;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+@media(max-width:900px){.platforms-grid{grid-template-columns:1fr 1fr;}.results-grid{grid-template-columns:repeat(2,1fr);}.services-grid{grid-template-columns:1fr;}}
+@media(max-width:600px){.platforms-grid{grid-template-columns:1fr;}.nav-cats{display:none;}.page-cta{flex-direction:column;gap:24px;}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Bayu Fadillah <em>Akbar</em></a>
+  <div class="nav-cats">
+    <a href="wordpress.html" class="nav-cat">WordPress</a>
+    <a href="video.html" class="nav-cat">Video</a>
+    <a href="ecommerce.html" class="nav-cat active">E-Commerce</a>
+    <a href="edtech.html" class="nav-cat">EdTech</a>
+  </div>
+  <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Kembali ke Home</a>
+</nav>
+<div class="page-hero">
+  <div class="page-hero-label reveal">Portfolio Category</div>
+  <h1 class="reveal d1">E-Commerce &<br><em>Marketplace</em></h1>
+  <p class="page-hero-desc reveal d2">Pengalaman mengelola toko online di berbagai platform — dari setup, optimasi harga, strategi promosi, hingga manajemen TikTok Live Shopping.</p>
+  <div class="page-hero-stats reveal d3">
+    <div class="stat-item"><div class="num">3+</div><div class="lbl">Platform</div></div>
+    <div class="stat-item"><div class="num">50+</div><div class="lbl">Produk Dikelola</div></div>
+    <div class="stat-item"><div class="num">⭐5.0</div><div class="lbl">Rating Toko</div></div>
+  </div>
+</div>
+
+<div class="platforms-section">
+  <div class="platforms-grid">
+    <div class="platform-card reveal">
+      <div class="platform-icon">🛍️</div>
+      <div class="platform-name">Shopee</div>
+      <div class="platform-desc">Setup toko, optimasi listing produk, manajemen harga flash sale, iklan Shopee Ads, dan strategi peningkatan rating bintang 5.</div>
+      <div class="platform-stats">
+        <div class="pstat"><div class="pnum">5.0⭐</div><div class="plbl">Rating</div></div>
+        <div class="pstat"><div class="pnum">100+</div><div class="plbl">Transaksi</div></div>
+      </div>
+    </div>
+    <div class="platform-card reveal d1">
+      <div class="platform-icon">🎵</div>
+      <div class="platform-name">TikTok Shop</div>
+      <div class="platform-desc">TikTok Live Shopping, setup scene, overlay grafis produk, strategi konten viral, dan affiliate marketing program.</div>
+      <div class="platform-stats">
+        <div class="pstat"><div class="pnum">10K+</div><div class="plbl">Views/Live</div></div>
+        <div class="pstat"><div class="pnum">30+</div><div class="plbl">Session</div></div>
+      </div>
+    </div>
+    <div class="platform-card reveal d2">
+      <div class="platform-icon">🚗</div>
+      <div class="platform-name">Grab</div>
+      <div class="platform-desc">Manajemen merchant Grab, optimasi menu digital, promo GrabFood, dan strategi peningkatan order harian.</div>
+      <div class="platform-stats">
+        <div class="pstat"><div class="pnum">4.9⭐</div><div class="plbl">Rating</div></div>
+        <div class="pstat"><div class="pnum">50+</div><div class="plbl">Order/hari</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="services-section">
+  <h2 class="section-title reveal">Layanan <em>E-Commerce</em></h2>
+  <div class="services-grid">
+    <div class="service-item reveal"><div class="service-check">🏪</div><div class="service-info"><div class="si-title">Setup & Optimasi Toko</div><div class="si-desc">Pengaturan profil toko, banner profesional, deskripsi produk SEO-friendly, dan kategori yang terstruktur rapi.</div></div></div>
+    <div class="service-item reveal d1"><div class="service-check">💰</div><div class="service-info"><div class="si-title">Manajemen Harga & Promosi</div><div class="si-desc">Strategi penetapan harga kompetitif, jadwal flash sale, voucher toko, dan program loyalitas pelanggan.</div></div></div>
+    <div class="service-item reveal d1"><div class="service-check">📸</div><div class="service-info"><div class="si-title">Foto & Copywriting Produk</div><div class="si-desc">Editing foto produk profesional, penulisan deskripsi yang persuasif dan SEO-friendly untuk meningkatkan konversi.</div></div></div>
+    <div class="service-item reveal d2"><div class="service-check">📊</div><div class="service-info"><div class="si-title">Analisis & Laporan Penjualan</div><div class="si-desc">Rekap bulanan performa toko, analisis produk terlaris, dan rekomendasi strategi peningkatan omzet.</div></div></div>
+    <div class="service-item reveal d2"><div class="service-check">🎬</div><div class="service-info"><div class="si-title">TikTok Live Shopping</div><div class="si-desc">Setup dan produksi TikTok Live lengkap — scene grafis, overlay produk, script host, dan strategi engagement penonton.</div></div></div>
+    <div class="service-item reveal d3"><div class="service-check">⭐</div><div class="service-info"><div class="si-title">Manajemen Rating & Review</div><div class="si-desc">Strategi follow-up pembeli untuk mendapatkan ulasan bintang 5 dan merespons keluhan secara profesional.</div></div></div>
+  </div>
+</div>
+
+<div class="results-section">
+  <h2 class="section-title reveal">Hasil yang <em>Dicapai</em></h2>
+  <div class="results-grid reveal d1">
+    <div class="result-box"><div class="result-num">5.0</div><div class="result-lbl">Rating bintang rata-rata semua platform</div></div>
+    <div class="result-box"><div class="result-num">3×</div><div class="result-lbl">Peningkatan penjualan setelah optimasi</div></div>
+    <div class="result-box"><div class="result-num">10K+</div><div class="result-lbl">Views per sesi TikTok Live rata-rata</div></div>
+    <div class="result-box"><div class="result-num">95%</div><div class="result-lbl">Tingkat kepuasan pelanggan</div></div>
+  </div>
+</div>
+
+<div class="page-cta reveal">
+  <h2>Mau kelola<br><em>toko online kamu?</em></h2>
+  <a href="index.html#contact" class="btn-black">Hubungi Saya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let rx=-200,ry=-200;
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';rx=e.clientX;ry=e.clientY;});
+(function a(){ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

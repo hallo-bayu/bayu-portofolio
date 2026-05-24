@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EdTech Portfolio — Bayu Fadillah Akbar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#fcfcfa;--text:#111;--border:rgba(0,0,0,0.08);--serif:'Playfair Display',serif;--sans:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}body{background:var(--bg);color:var(--text);font-family:var(--sans);cursor:none;overflow-x:hidden;}a{text-decoration:none;color:inherit;}
+#cur{position:fixed;width:10px;height:10px;background:#111;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(0,0,0,0.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(252,252,250,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;}
+.nav-logo{font-family:var(--sans);font-size:0.95rem;font-weight:500;}.nav-logo em{font-style:italic;color:#999;}
+.nav-cats{display:flex;gap:6px;}.nav-cat{font-family:var(--sans);font-size:0.75rem;font-weight:500;padding:6px 16px;border-radius:100px;border:1px solid var(--border);background:#fff;color:#888;cursor:pointer;transition:all .2s;}.nav-cat:hover,.nav-cat.active{background:#111;color:#fff;border-color:#111;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.8rem;font-weight:500;color:#666;transition:color .2s;}.nav-back:hover{color:#111;}.nav-back svg{width:16px;height:16px;}
+.page-hero{padding:120px 5vw 60px;position:relative;z-index:1;max-width:1280px;margin:0 auto;}
+.page-hero-label{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:0.68rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:#bbb;margin-bottom:16px;}
+.page-hero-label::before{content:'';display:inline-block;width:24px;height:1px;background:#ccc;}
+.page-hero h1{font-family:var(--serif);font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin-bottom:20px;}
+.page-hero h1 em{font-style:italic;}.page-hero-desc{font-family:var(--sans);font-size:0.95rem;font-weight:300;color:#888;line-height:1.8;max-width:520px;}
+.page-hero-stats{display:flex;gap:32px;margin-top:32px;}.stat-item .num{font-family:var(--serif);font-size:2rem;font-weight:700;font-style:italic;}.stat-item .lbl{font-family:var(--sans);font-size:0.72rem;color:#bbb;margin-top:2px;}
+
+/* Experience timeline */
+.exp-section{max-width:1280px;margin:0 auto;padding:0 5vw 60px;position:relative;z-index:1;}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:32px;}.section-title em{font-style:italic;}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.exp-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:32px;box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:all .3s;}
+.exp-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.08);}
+.exp-period{font-family:var(--sans);font-size:0.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#bbb;margin-bottom:12px;}
+.exp-org{font-family:var(--serif);font-size:1.4rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;}
+.exp-role{font-family:var(--sans);font-size:0.82rem;font-weight:400;color:#aaa;margin-bottom:16px;}
+.exp-desc{font-family:var(--sans);font-size:0.83rem;font-weight:300;color:#777;line-height:1.75;margin-bottom:18px;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.exp-tag{font-family:var(--sans);font-size:0.65rem;background:#f4f4f2;border:1px solid rgba(0,0,0,0.07);color:#aaa;padding:4px 12px;border-radius:100px;}
+
+/* LMS tools */
+.lms-section{max-width:1280px;margin:0 auto;padding:0 5vw 60px;position:relative;z-index:1;}
+.lms-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.lms-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;text-align:center;transition:all .3s;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+.lms-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,0.08);}
+.lms-icon{font-size:2.2rem;margin-bottom:10px;}
+.lms-name{font-family:var(--sans);font-size:0.88rem;font-weight:600;margin-bottom:4px;}
+.lms-desc{font-family:var(--sans);font-size:0.72rem;font-weight:300;color:#aaa;line-height:1.5;}
+.lms-level{display:inline-block;font-family:var(--sans);font-size:0.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-top:10px;}
+.level-expert{background:rgba(34,197,94,0.1);color:#16a34a;}
+.level-mid{background:rgba(234,179,8,0.1);color:#a16207;}
+
+/* Vision */
+.vision-section{max-width:1280px;margin:0 auto;padding:0 5vw 80px;position:relative;z-index:1;}
+.vision-card{background:#111;border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.vision-left h2{font-family:var(--serif);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;font-style:italic;color:#fff;line-height:1.1;margin-bottom:16px;}
+.vision-left p{font-family:var(--sans);font-size:0.88rem;font-weight:300;color:#888;line-height:1.8;}
+.vision-right{display:flex;flex-direction:column;gap:14px;}
+.vision-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.06);}
+.vision-dot{width:8px;height:8px;border-radius:50%;background:#b6f000;flex-shrink:0;margin-top:4px;}
+.vision-text{font-family:var(--sans);font-size:0.82rem;font-weight:300;color:#aaa;line-height:1.6;}
+.vision-text strong{color:#fff;font-weight:500;}
+
+.page-cta{max-width:1280px;margin:0 auto;padding:60px 5vw 100px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);position:relative;z-index:1;}
+.page-cta h2{font-family:var(--serif);font-size:clamp(1.8rem,3vw,3rem);font-weight:700;letter-spacing:-0.02em;}.page-cta h2 em{font-style:italic;}
+.btn-black{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.85rem;font-weight:500;background:#111;color:#fff;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;transition:all .25s;}.btn-black:hover{background:#333;transform:translateY(-2px);}.btn-black svg{width:14px;height:14px;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+@media(max-width:900px){.exp-grid{grid-template-columns:1fr;}.lms-grid{grid-template-columns:repeat(2,1fr);}.vision-card{grid-template-columns:1fr;gap:28px;}}
+@media(max-width:600px){.lms-grid{grid-template-columns:repeat(2,1fr);}.nav-cats{display:none;}.page-cta{flex-direction:column;gap:24px;}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Bayu Fadillah <em>Akbar</em></a>
+  <div class="nav-cats">
+    <a href="wordpress.html" class="nav-cat">WordPress</a>
+    <a href="video.html" class="nav-cat">Video</a>
+    <a href="ecommerce.html" class="nav-cat">E-Commerce</a>
+    <a href="edtech.html" class="nav-cat active">EdTech</a>
+  </div>
+  <a href="index.html" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Kembali ke Home</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-label reveal">Portfolio Category</div>
+  <h1 class="reveal d1">EdTech &<br><em>Instructional Design</em></h1>
+  <p class="page-hero-desc reveal d2">Latar belakang Teknologi Pendidikan UNS memberikan pemahaman mendalam tentang cara merancang pengalaman belajar yang efektif berbasis teknologi.</p>
+  <div class="page-hero-stats reveal d3">
+    <div class="stat-item"><div class="num">2×</div><div class="lbl">Magang Profesional</div></div>
+    <div class="stat-item"><div class="num">4+</div><div class="lbl">LMS Dikuasai</div></div>
+    <div class="stat-item"><div class="num">S1</div><div class="lbl">Tek. Pendidikan UNS</div></div>
+  </div>
+</div>
+
+<div class="exp-section">
+  <h2 class="section-title reveal">Pengalaman <em>Profesional</em></h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-period">2023 — 2024</div>
+      <div class="exp-org">Dinas Pendidikan Jawa Barat Wilayah IV</div>
+      <div class="exp-role">Frontend & Technology Intern</div>
+      <div class="exp-desc">Membantu pengembangan sistem informasi pendidikan daerah, digitalisasi konten website instansi, implementasi teknologi untuk efisiensi administrasi, dan pelatihan literasi digital untuk staf.</div>
+      <div class="exp-tags"><span class="exp-tag">WordPress</span><span class="exp-tag">Google Workspace</span><span class="exp-tag">Digitalisasi</span><span class="exp-tag">Pelatihan</span></div>
+    </div>
+    <div class="exp-card reveal d1">
+      <div class="exp-period">2022 — 2023</div>
+      <div class="exp-org">SMK Negeri 3</div>
+      <div class="exp-role">EdTech & Media Pembelajaran Intern</div>
+      <div class="exp-desc">Produksi media pembelajaran digital interaktif, setup dan training Google Classroom untuk 50+ guru, pembuatan video tutorial, dan pengembangan modul e-learning untuk siswa SMK.</div>
+      <div class="exp-tags"><span class="exp-tag">Google Classroom</span><span class="exp-tag">Canva Edu</span><span class="exp-tag">Video Edukatif</span><span class="exp-tag">Modul Digital</span></div>
+    </div>
+    <div class="exp-card reveal d2" style="grid-column: span 2;">
+      <div class="exp-period">2021 — Sekarang</div>
+      <div class="exp-org">Universitas Sebelas Maret (UNS)</div>
+      <div class="exp-role">Mahasiswa S1 Teknologi Pendidikan</div>
+      <div class="exp-desc">Mempelajari desain instruksional, pengembangan media pembelajaran, evaluasi program pendidikan, dan implementasi teknologi dalam kurikulum. Fokus riset pada penggunaan LMS dan AI dalam sistem pendidikan Indonesia. GPA memuaskan dengan aktif dalam kegiatan pengembangan teknologi pendidikan.</div>
+      <div class="exp-tags"><span class="exp-tag">Instructional Design</span><span class="exp-tag">Media Pembelajaran</span><span class="exp-tag">LMS</span><span class="exp-tag">Evaluasi Pendidikan</span><span class="exp-tag">AI in Education</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="lms-section">
+  <h2 class="section-title reveal">Platform LMS yang <em>Dikuasai</em></h2>
+  <div class="lms-grid">
+    <div class="lms-card reveal"><div class="lms-icon">🌐</div><div class="lms-name">Moodle</div><div class="lms-desc">Konfigurasi course, kuis, dan laporan kemajuan siswa</div><span class="lms-level level-expert">Expert</span></div>
+    <div class="lms-card reveal d1"><div class="lms-icon">📘</div><div class="lms-name">Google Classroom</div><div class="lms-desc">Integrasi Google Workspace for Education</div><span class="lms-level level-expert">Expert</span></div>
+    <div class="lms-card reveal d1"><div class="lms-icon">🎓</div><div class="lms-name">LearnDash</div><div class="lms-desc">LMS WordPress terbaik untuk e-learning profesional</div><span class="lms-level level-expert">Expert</span></div>
+    <div class="lms-card reveal d2"><div class="lms-icon">🎨</div><div class="lms-name">Canva for Education</div><div class="lms-desc">Media pembelajaran visual dan interaktif</div><span class="lms-level level-expert">Expert</span></div>
+    <div class="lms-card reveal d2"><div class="lms-icon">📹</div><div class="lms-name">Zoom/Meet</div><div class="lms-desc">Fasilitasi kelas online dan webinar edukatif</div><span class="lms-level level-mid">Intermediate</span></div>
+    <div class="lms-card reveal d3"><div class="lms-icon">📊</div><div class="lms-name">Kahoot & Quizizz</div><div class="lms-desc">Gamifikasi pembelajaran interaktif</div><span class="lms-level level-mid">Intermediate</span></div>
+    <div class="lms-card reveal d3"><div class="lms-icon">🤖</div><div class="lms-name">AI Tools</div><div class="lms-desc">ChatGPT, Gamma, Canva AI untuk konten edukatif</div><span class="lms-level level-mid">Intermediate</span></div>
+    <div class="lms-card reveal d3"><div class="lms-icon">📱</div><div class="lms-name">Edmodo</div><div class="lms-desc">Manajemen kelas mobile-first untuk siswa</div><span class="lms-level level-mid">Intermediate</span></div>
+  </div>
+</div>
+
+<div class="vision-section">
+  <div class="vision-card reveal">
+    <div class="vision-left">
+      <h2>Tujuan Karir sebagai <em>Web LMS Developer</em></h2>
+      <p>Menggabungkan latar belakang Teknologi Pendidikan dengan kemampuan web development untuk membangun platform pembelajaran digital yang benar-benar efektif bagi pendidikan Indonesia.</p>
+    </div>
+    <div class="vision-right">
+      <div class="vision-item"><div class="vision-dot"></div><div class="vision-text"><strong>Bangun LMS custom</strong> untuk sekolah dan universitas yang lebih fleksibel dari platform off-the-shelf</div></div>
+      <div class="vision-item"><div class="vision-dot"></div><div class="vision-text"><strong>Integrasi AI</strong> dalam sistem pembelajaran untuk personalisasi pengalaman belajar setiap siswa</div></div>
+      <div class="vision-item"><div class="vision-dot"></div><div class="vision-text"><strong>Bridging gap</strong> antara teknisi IT dan praktisi pendidikan untuk solusi yang lebih tepat sasaran</div></div>
+      <div class="vision-item"><div class="vision-dot"></div><div class="vision-text"><strong>Kontribusi nyata</strong> pada transformasi digital pendidikan Indonesia dari level sekolah hingga universitas</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-cta reveal">
+  <h2>Butuh konsultasi<br><em>EdTech?</em></h2>
+  <a href="index.html#contact" class="btn-black">Hubungi Saya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let rx=-200,ry=-200;
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';rx=e.clientX;ry=e.clientY;});
+(function a(){ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

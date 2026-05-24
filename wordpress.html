@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WordPress Portfolio — Bayu Fadillah Akbar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fcfcfa;
+  --bg2: #f7f7f5;
+  --text: #111;
+  --muted: #888;
+  --light: #ccc;
+  --border: rgba(0,0,0,0.08);
+  --lime: #b6f000;
+  --serif: 'Playfair Display', serif;
+  --sans: 'DM Sans', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); cursor: none; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* CURSOR */
+#cur { position: fixed; width: 10px; height: 10px; background: #111; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+#cur-ring { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(0,0,0,0.2); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: left .12s ease, top .12s ease, width .25s, height .25s; }
+
+/* GRID BG */
+.grid-bg::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 48px 48px; pointer-events: none; z-index: 0;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(252,252,250,0.94); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 5vw;
+}
+.nav-logo { font-family: var(--sans); font-size: 0.95rem; font-weight: 500; color: #111; }
+.nav-logo em { font-style: italic; color: #999; }
+.nav-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+  color: #666; transition: color .2s;
+}
+.nav-back:hover { color: #111; }
+.nav-back svg { width: 16px; height: 16px; }
+.nav-cats { display: flex; gap: 6px; }
+.nav-cat {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 500;
+  padding: 6px 16px; border-radius: 100px;
+  border: 1px solid var(--border); background: #fff;
+  color: #888; cursor: pointer; transition: all .2s;
+}
+.nav-cat:hover, .nav-cat.active { background: #111; color: #fff; border-color: #111; }
+
+/* HERO HEADER */
+.page-hero {
+  padding: 120px 5vw 60px;
+  position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto;
+}
+.page-hero-label {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #bbb;
+  margin-bottom: 16px;
+}
+.page-hero-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: #ccc; }
+.page-hero h1 {
+  font-family: var(--serif); font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: #111;
+  margin-bottom: 20px;
+}
+.page-hero h1 em { font-style: italic; }
+.page-hero-desc {
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 300;
+  color: #888; line-height: 1.8; max-width: 520px;
+}
+.page-hero-stats {
+  display: flex; gap: 32px; margin-top: 32px;
+}
+.stat-item .num {
+  font-family: var(--serif); font-size: 2rem; font-weight: 700; font-style: italic; color: #111;
+}
+.stat-item .lbl { font-family: var(--sans); font-size: 0.72rem; color: #bbb; margin-top: 2px; }
+
+/* FILTER BAR */
+.filter-bar {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw 40px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.filter-btn {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 500;
+  padding: 8px 18px; border-radius: 100px;
+  border: 1px solid var(--border); background: #fff;
+  color: #888; cursor: pointer; transition: all .25s;
+}
+.filter-btn:hover, .filter-btn.active { background: #111; color: #fff; border-color: #111; }
+
+/* PORTFOLIO GRID */
+.portfolio-section {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw 100px;
+  position: relative; z-index: 1;
+}
+.portfolio-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.portfolio-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: all .35s cubic-bezier(.23,1,.32,1); cursor: pointer;
+  display: flex; flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.portfolio-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.10); border-color: rgba(0,0,0,0.12); }
+.portfolio-card.featured { grid-column: span 2; }
+.card-thumb {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+}
+.portfolio-card.featured .card-thumb { aspect-ratio: 16/7; }
+.card-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.portfolio-card:hover .card-overlay { opacity: 1; }
+.card-overlay-btn {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #fff; border: 1px solid rgba(255,255,255,0.6);
+  padding: 10px 24px; border-radius: 100px;
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+}
+.card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.card-cat {
+  font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #bbb;
+}
+.card-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: #111; }
+.card-desc { font-family: var(--sans); font-size: 0.78rem; font-weight: 300; color: #aaa; line-height: 1.65; flex: 1; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.card-tag {
+  font-family: var(--sans); font-size: 0.62rem; font-weight: 400;
+  background: #f4f4f2; border: 1px solid rgba(0,0,0,0.07);
+  color: #aaa; padding: 3px 10px; border-radius: 100px;
+}
+.card-link {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+  color: #111; text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-color: rgba(0,0,0,0.2); transition: text-decoration-color .2s;
+  white-space: nowrap;
+}
+.card-link:hover { text-decoration-color: #111; }
+
+/* STATUS BADGE */
+.card-status {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--sans); font-size: 0.62rem; font-weight: 500;
+  padding: 3px 10px; border-radius: 100px; margin-bottom: 4px;
+}
+.status-live { background: rgba(34,197,94,0.1); color: #16a34a; }
+.status-process { background: rgba(234,179,8,0.1); color: #a16207; }
+.status-concept { background: rgba(148,163,184,0.1); color: #64748b; }
+
+/* CTA BOTTOM */
+.page-cta {
+  max-width: 1280px; margin: 0 auto;
+  padding: 60px 5vw 100px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.page-cta h2 { font-family: var(--serif); font-size: clamp(1.8rem,3vw,3rem); font-weight: 700; letter-spacing: -0.02em; }
+.page-cta h2 em { font-style: italic; }
+.btn-black {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+  background: #111; color: #fff; padding: 14px 28px;
+  border-radius: 100px; border: none; cursor: pointer; transition: all .25s;
+}
+.btn-black:hover { background: #333; transform: translateY(-2px); }
+.btn-black svg { width: 14px; height: 14px; }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px); z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+  padding: 20px;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: #fff; border-radius: 20px; max-width: 680px; width: 100%;
+  max-height: 85vh; overflow-y: auto;
+  transform: translateY(20px); transition: transform .3s;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.2);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-thumb { aspect-ratio: 16/8; display: flex; align-items: center; justify-content: center; font-size: 5rem; border-radius: 20px 20px 0 0; overflow: hidden; }
+.modal-body { padding: 32px; }
+.modal-cat { font-family: var(--sans); font-size: 0.65rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #bbb; margin-bottom: 10px; }
+.modal-title { font-family: var(--serif); font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+.modal-desc { font-family: var(--sans); font-size: 0.88rem; font-weight: 300; color: #666; line-height: 1.85; margin-bottom: 24px; }
+.modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+.modal-tag { font-family: var(--sans); font-size: 0.72rem; background: #f4f4f2; border: 1px solid rgba(0,0,0,0.07); color: #888; padding: 5px 14px; border-radius: 100px; }
+.modal-footer { display: flex; gap: 12px; align-items: center; }
+.modal-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; color: #111; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.modal { position: relative; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; } .d3 { transition-delay: .3s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) { .portfolio-grid { grid-template-columns: 1fr 1fr; } .portfolio-card.featured { grid-column: span 2; } }
+@media (max-width: 600px) { .portfolio-grid { grid-template-columns: 1fr; } .portfolio-card.featured { grid-column: span 1; } .nav-cats { display: none; } .page-cta { flex-direction: column; gap: 24px; } }
+</style>
+</head>
+<body class="grid-bg">
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="index.html" class="nav-logo">Bayu Fadillah <em>Akbar</em></a>
+  <div class="nav-cats">
+    <a href="wordpress.html" class="nav-cat active">WordPress</a>
+    <a href="video.html" class="nav-cat">Video</a>
+    <a href="ecommerce.html" class="nav-cat">E-Commerce</a>
+    <a href="edtech.html" class="nav-cat">EdTech</a>
+  </div>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Kembali ke Home
+  </a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-label reveal">Portfolio Category</div>
+  <h1 class="reveal d1">WordPress &<br><em>LMS Development</em></h1>
+  <p class="page-hero-desc reveal d2">Koleksi project WordPress saya — dari company profile, LMS platform, hingga toko online WooCommerce yang dibangun dengan Elementor dan optimalisasi AI.</p>
+  <div class="page-hero-stats reveal d3">
+    <div class="stat-item"><div class="num">6+</div><div class="lbl">Project Selesai</div></div>
+    <div class="stat-item"><div class="num">3+</div><div class="lbl">Client Puas</div></div>
+    <div class="stat-item"><div class="num">2yr</div><div class="lbl">Pengalaman</div></div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar reveal">
+  <button class="filter-btn active" onclick="filterCards('all', this)">Semua</button>
+  <button class="filter-btn" onclick="filterCards('lms', this)">LMS</button>
+  <button class="filter-btn" onclick="filterCards('company', this)">Company Profile</button>
+  <button class="filter-btn" onclick="filterCards('woo', this)">WooCommerce</button>
+  <button class="filter-btn" onclick="filterCards('blog', this)">Blog</button>
+</div>
+
+<!-- PORTFOLIO GRID -->
+<div class="portfolio-section">
+  <div class="portfolio-grid" id="grid">
+
+    <!-- Card 1 - FEATURED -->
+    <div class="portfolio-card featured reveal" data-cat="lms" onclick="openModal('modal1')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);">🏫
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-live">● Live</span>
+          <div class="card-cat">WordPress · LMS · LearnDash</div>
+          <div class="card-title">Platform E-Learning Sekolah Menengah</div>
+          <div class="card-desc">LMS berbasis WordPress dengan LearnDash — manajemen kelas online, kuis interaktif, sertifikat digital otomatis, dan laporan kemajuan siswa real-time untuk 500+ pengguna aktif.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">LearnDash</span><span class="card-tag">Elementor</span><span class="card-tag">PHP</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="portfolio-card reveal d1" data-cat="company" onclick="openModal('modal2')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);">💼
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-live">● Live</span>
+          <div class="card-cat">WordPress · Company Profile</div>
+          <div class="card-title">Website Instansi Pemerintah</div>
+          <div class="card-desc">Website resmi instansi dengan sistem berita, galeri, dan profil organisasi yang responsif dan mudah dikelola tim non-teknis.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">Elementor</span><span class="card-tag">SEO</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="portfolio-card reveal d1" data-cat="woo" onclick="openModal('modal3')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#1a0a00,#4a2000,#7c3a00);">🛍️
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-live">● Live</span>
+          <div class="card-cat">WordPress · WooCommerce</div>
+          <div class="card-title">Toko Online Fashion WooCommerce</div>
+          <div class="card-desc">Toko online lengkap dengan sistem pembayaran, manajemen stok, diskon otomatis, dan integrasi pengiriman.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WooCommerce</span><span class="card-tag">Elementor</span><span class="card-tag">Payment</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="portfolio-card reveal d2" data-cat="lms" onclick="openModal('modal4')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#001520,#003050,#004d7a);">📚
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-process">◐ In Progress</span>
+          <div class="card-cat">WordPress · LMS · Moodle Integration</div>
+          <div class="card-title">Portal Pembelajaran Universitas</div>
+          <div class="card-desc">Portal e-learning universitas dengan integrasi Moodle, single sign-on, dan dashboard analitik dosen.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">Moodle</span><span class="card-tag">API</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="portfolio-card reveal d2" data-cat="blog" onclick="openModal('modal5')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#0d0d0d,#1a0533,#2d1b69);">✍️
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-live">● Live</span>
+          <div class="card-cat">WordPress · Blog · SEO</div>
+          <div class="card-title">Blog Pendidikan Interaktif</div>
+          <div class="card-desc">Blog edukasi dengan sistem komentar, newsletter Mailchimp, dan optimasi SEO Yoast untuk traffic organik tinggi.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">Yoast SEO</span><span class="card-tag">Mailchimp</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="portfolio-card reveal d3" data-cat="company" onclick="openModal('modal6')">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#001a0f,#004d2c,#006b3c);">🏢
+        <div class="card-overlay"><span class="card-overlay-btn">Lihat Detail</span></div>
+      </div>
+      <div class="card-body">
+        <div>
+          <span class="card-status status-concept">○ Concept</span>
+          <div class="card-cat">WordPress · Landing Page · AI</div>
+          <div class="card-title">Landing Page AI-Optimized</div>
+          <div class="card-desc">Landing page bisnis modern dengan copywriting AI, hero section animasi, dan konversi form terintegrasi CRM.</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-tags"><span class="card-tag">WordPress</span><span class="card-tag">AI Content</span><span class="card-tag">CRM</span></div>
+          <span class="card-link">Lihat →</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="page-cta reveal">
+  <h2>Punya project<br><em>WordPress?</em></h2>
+  <a href="index.html#contact" class="btn-black">
+    Hubungi Saya
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal1" onclick="closeModal(event, 'modal1')">
+  <div class="modal">
+    <div class="modal-close" onclick="document.getElementById('modal1').classList.remove('open')">✕</div>
+    <div class="modal-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);">🏫</div>
+    <div class="modal-body">
+      <div class="modal-cat">WordPress · LMS · LearnDash</div>
+      <div class="modal-title">Platform E-Learning Sekolah Menengah</div>
+      <div class="modal-desc">Website LMS berbasis WordPress dengan LearnDash untuk manajemen kelas online. Fitur utama mencakup: sistem enrollment siswa otomatis, kuis interaktif dengan batas waktu, sertifikat digital yang bisa diverifikasi, laporan kemajuan belajar real-time, dan forum diskusi per mata pelajaran. Platform ini digunakan oleh 500+ siswa aktif dengan uptime 99.9%.</div>
+      <div class="modal-tags">
+        <span class="modal-tag">WordPress</span><span class="modal-tag">LearnDash</span><span class="modal-tag">Elementor Pro</span><span class="modal-tag">PHP 8.0</span><span class="modal-tag">MySQL</span><span class="modal-tag">WooCommerce</span>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+        <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: Live ✓</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal2" onclick="closeModal(event, 'modal2')">
+  <div class="modal">
+    <div class="modal-close" onclick="document.getElementById('modal2').classList.remove('open')">✕</div>
+    <div class="modal-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);">💼</div>
+    <div class="modal-body">
+      <div class="modal-cat">WordPress · Company Profile</div>
+      <div class="modal-title">Website Instansi Pemerintah</div>
+      <div class="modal-desc">Website resmi instansi pemerintah dengan sistem manajemen konten yang mudah digunakan oleh tim non-teknis. Fitur: sistem berita & pengumuman, galeri foto/video, profil pejabat, dan halaman layanan publik yang terstruktur. Dioptimasi untuk kecepatan loading dan aksesibilitas.</div>
+      <div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Elementor</span><span class="modal-tag">Yoast SEO</span><span class="modal-tag">WP Rocket</span></div>
+      <div class="modal-footer">
+        <a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+        <span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: Live ✓</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal3" onclick="closeModal(event, 'modal3')"><div class="modal"><div class="modal-close" onclick="document.getElementById('modal3').classList.remove('open')">✕</div><div class="modal-thumb" style="background:linear-gradient(135deg,#1a0a00,#4a2000,#7c3a00);">🛍️</div><div class="modal-body"><div class="modal-cat">WordPress · WooCommerce</div><div class="modal-title">Toko Online Fashion WooCommerce</div><div class="modal-desc">Toko online fashion lengkap dengan WooCommerce. Fitur: multi-varian produk (ukuran, warna), integrasi payment gateway (Midtrans, COD), kalkulasi ongkir otomatis, manajemen stok real-time, dan halaman checkout yang dioptimasi untuk konversi tinggi.</div><div class="modal-tags"><span class="modal-tag">WooCommerce</span><span class="modal-tag">Elementor</span><span class="modal-tag">Midtrans</span><span class="modal-tag">RajaOngkir API</span></div><div class="modal-footer"><a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site</a><span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: Live ✓</span></div></div></div></div>
+
+<div class="modal-overlay" id="modal4" onclick="closeModal(event, 'modal4')"><div class="modal"><div class="modal-close" onclick="document.getElementById('modal4').classList.remove('open')">✕</div><div class="modal-thumb" style="background:linear-gradient(135deg,#001520,#003050,#004d7a);">📚</div><div class="modal-body"><div class="modal-cat">WordPress · LMS · Moodle</div><div class="modal-title">Portal Pembelajaran Universitas</div><div class="modal-desc">Portal e-learning skala universitas dengan integrasi Moodle untuk manajemen kursus, single sign-on dengan sistem akademik, dashboard analitik dosen untuk memantau kemajuan mahasiswa, dan sistem notifikasi email otomatis.</div><div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Moodle API</span><span class="modal-tag">SSO</span><span class="modal-tag">PHP</span></div><div class="modal-footer"><a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site</a><span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: In Progress</span></div></div></div></div>
+
+<div class="modal-overlay" id="modal5" onclick="closeModal(event, 'modal5')"><div class="modal"><div class="modal-close" onclick="document.getElementById('modal5').classList.remove('open')">✕</div><div class="modal-thumb" style="background:linear-gradient(135deg,#0d0d0d,#1a0533,#2d1b69);">✍️</div><div class="modal-body"><div class="modal-cat">WordPress · Blog · SEO</div><div class="modal-title">Blog Pendidikan Interaktif</div><div class="modal-desc">Blog edukasi dengan sistem komentar moderated, integrasi newsletter Mailchimp, related posts otomatis, dan optimasi SEO on-page menggunakan Yoast. Traffic organik meningkat 3x dalam 3 bulan pertama.</div><div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Yoast SEO</span><span class="modal-tag">Mailchimp</span><span class="modal-tag">Google Analytics</span></div><div class="modal-footer"><a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site</a><span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: Live ✓</span></div></div></div></div>
+
+<div class="modal-overlay" id="modal6" onclick="closeModal(event, 'modal6')"><div class="modal"><div class="modal-close" onclick="document.getElementById('modal6').classList.remove('open')">✕</div><div class="modal-thumb" style="background:linear-gradient(135deg,#001a0f,#004d2c,#006b3c);">🏢</div><div class="modal-body"><div class="modal-cat">WordPress · Landing Page · AI</div><div class="modal-title">Landing Page AI-Optimized</div><div class="modal-desc">Landing page bisnis modern dengan copywriting yang dioptimasi menggunakan AI (ChatGPT), hero section dengan animasi scroll-triggered, A/B testing form, dan integrasi CRM untuk lead management otomatis.</div><div class="modal-tags"><span class="modal-tag">WordPress</span><span class="modal-tag">Elementor Pro</span><span class="modal-tag">ChatGPT API</span><span class="modal-tag">HubSpot CRM</span></div><div class="modal-footer"><a href="#" class="btn-black" style="font-size:0.8rem;padding:11px 22px;">Visit Site</a><span style="font-family:'DM Sans',sans-serif;font-size:0.75rem;color:#bbb;">Status: Concept</span></div></div></div></div>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur'), ring = document.getElementById('cur-ring');
+let rx = -200, ry = -200;
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+  setTimeout(() => { rx=e.clientX; ry=e.clientY; }, 0);
+});
+(function anim(){ ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Filter
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.portfolio-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+      card.style.opacity = '0';
+      setTimeout(() => { card.style.transition = 'opacity .4s'; card.style.opacity = '1'; }, 50);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Modal
+function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(e, id) { if(e.target === document.getElementById(id)) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; } }
+document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); document.body.style.overflow=''; }));
+document.addEventListener('keydown', e => { if(e.key==='Escape') { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open')); document.body.style.overflow=''; } });
+</script>
+</body>
+</html>
