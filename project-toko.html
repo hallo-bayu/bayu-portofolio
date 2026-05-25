@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manajemen Toko Online & Flash Sale — Bayu Fadillah Akbar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#fcfcfa;--text:#111;--border:rgba(0,0,0,0.08);--lime:#b6f000;--serif:'Playfair Display',serif;--head:'Barlow Condensed',sans-serif;--sans:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);cursor:none;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+#cur{position:fixed;width:10px;height:10px;background:#111;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(0,0,0,0.2);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.05) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(252,252,250,0.94);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:18px 5vw;}
+.nav-logo{font-family:var(--sans);font-size:0.95rem;font-weight:500;}.nav-logo em{font-style:italic;color:#999;}
+.nav-back{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.8rem;font-weight:500;color:#666;transition:color .2s;cursor:pointer;}.nav-back:hover{color:#111;}
+.nav-back svg{width:16px;height:16px;}
+.nav-badge{font-family:var(--sans);font-size:0.72rem;font-weight:600;background:#6d28d9;color:#fff;padding:6px 16px;border-radius:100px;}
+
+/* HERO */
+.proj-hero{min-height:70vh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 5vw 60px;position:relative;z-index:1;overflow:hidden;}
+.proj-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a0533,#2d1060,#150a2e);z-index:0;}
+.proj-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(252,252,250,0.95) 100%);}
+.proj-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:48px 48px;z-index:1;}
+.proj-hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%;}
+.proj-hero-label{font-family:var(--sans);font-size:0.68rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.proj-hero-label::before{content:'';display:inline-block;width:24px;height:1px;background:var(--lime);}
+.proj-hero-icon{font-size:4rem;margin-bottom:20px;}
+.proj-hero-title{font-family:var(--head);font-size:clamp(3rem,7vw,7rem);font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;line-height:1;color:#fff;margin-bottom:16px;}
+.proj-hero-title em{font-style:italic;color:var(--lime);}
+.proj-hero-sub{font-family:var(--sans);font-size:0.9rem;font-weight:300;color:rgba(255,255,255,0.7);max-width:500px;line-height:1.75;}
+
+/* STATS */
+.stats-section{max-width:1280px;margin:0 auto;padding:60px 5vw;position:relative;z-index:1;}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07);border-radius:16px;overflow:hidden;}
+.stat-box{background:#fff;padding:28px 24px;}
+.sn{font-family:var(--serif);font-size:2.2rem;font-weight:700;font-style:italic;color:#111;line-height:1;margin-bottom:4px;}
+.sl{font-family:var(--sans);font-size:0.73rem;color:#bbb;font-weight:400;}
+
+/* CONTENT */
+.content-section{max-width:1280px;margin:0 auto;padding:0 5vw 60px;display:grid;grid-template-columns:1fr 380px;gap:60px;position:relative;z-index:1;}
+.section-title{font-family:var(--serif);font-size:1.8rem;font-weight:700;letter-spacing:-0.02em;color:#111;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(0,0,0,0.08);}
+.section-title em{font-style:italic;}
+.overview-text{font-family:var(--sans);font-size:0.9rem;font-weight:300;color:#666;line-height:1.85;}
+
+/* Features */
+.feats-list{display:flex;flex-direction:column;gap:14px;margin-top:32px;}
+.feat-item{display:flex;align-items:flex-start;gap:16px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:18px;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.03);}
+.feat-item:hover{transform:translateX(4px);border-color:rgba(0,0,0,0.14);}
+.feat-icon{width:40px;height:40px;border-radius:10px;background:#f4f4f2;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.feat-title{font-family:var(--sans);font-size:0.88rem;font-weight:500;color:#111;margin-bottom:4px;}
+.feat-desc{font-family:var(--sans);font-size:0.78rem;font-weight:300;color:#aaa;line-height:1.5;}
+
+/* Sidebar */
+.proj-sidebar{display:flex;flex-direction:column;gap:20px;}
+.sidebar-card{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.03);}
+.sc-title{font-family:var(--sans);font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#bbb;margin-bottom:14px;}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-family:var(--sans);font-size:0.72rem;font-weight:400;background:#f4f4f2;border:1px solid rgba(0,0,0,0.07);color:#777;padding:5px 14px;border-radius:100px;}
+.cta-card{background:#111;border-radius:14px;padding:28px;}
+.cta-card h3{font-family:var(--serif);font-size:1.3rem;font-weight:700;font-style:italic;color:#fff;margin-bottom:10px;}
+.cta-card p{font-family:var(--sans);font-size:0.8rem;font-weight:300;color:#888;margin-bottom:20px;line-height:1.6;}
+.btn-lime{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.82rem;font-weight:500;background:var(--lime);color:#111;padding:12px 24px;border-radius:100px;border:none;cursor:pointer;transition:all .25s;width:100%;justify-content:center;}
+.btn-lime:hover{background:#d4ff4d;transform:translateY(-2px);}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:0.82rem;font-weight:400;background:transparent;color:#fff;padding:11px 24px;border-radius:100px;border:1px solid rgba(255,255,255,0.15);cursor:pointer;transition:all .25s;width:100%;justify-content:center;margin-top:8px;}
+.btn-outline:hover{border-color:rgba(255,255,255,0.4);}
+
+/* Results */
+.results-section{max-width:1280px;margin:0 auto;padding:0 5vw 60px;position:relative;z-index:1;}
+.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.result-item{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.03);}
+.ri-num{font-family:var(--serif);font-size:2rem;font-weight:700;font-style:italic;color:#111;margin-bottom:4px;}
+.ri-label{font-family:var(--sans);font-size:0.73rem;color:#bbb;}
+
+/* Next project */
+.next-section{max-width:1280px;margin:0 auto;padding:40px 5vw 100px;border-top:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.next-label{font-family:var(--sans);font-size:0.68rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:#bbb;margin-bottom:8px;}
+.next-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;letter-spacing:-0.02em;}
+.btn-next{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:0.85rem;font-weight:500;background:#111;color:#fff;padding:14px 28px;border-radius:100px;transition:all .25s;}
+.btn-next:hover{background:#333;transform:translateY(-2px);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+@media(max-width:900px){.content-section{grid-template-columns:1fr;}.stats-row{grid-template-columns:repeat(2,1fr);}.results-grid{grid-template-columns:repeat(2,1fr);}.next-section{flex-direction:column;gap:24px;}}
+@media(max-width:600px){.nav-badge{display:none;}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Bayu Fadillah <em>Akbar</em></a>
+  <a href="index.html#projects" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Semua Project</a>
+  <span class="nav-badge">E-Commerce</span>
+</nav>
+
+<!-- HERO -->
+<div class="proj-hero">
+  <div class="proj-hero-bg"></div>
+  <div class="proj-hero-grid"></div>
+  <div class="proj-hero-content">
+    <div class="proj-hero-label">Shopee · TikTok Shop · Live Shopping</div>
+    <div class="proj-hero-icon">🛒</div>
+    <h1 class="proj-hero-title">Manajemen<br>Toko Online & Flash Sale</h1>
+    <p class="proj-hero-sub">Pengelolaan toko online end-to-end di berbagai marketplace — mulai dari setup toko, optimasi listing produk, strategi fl...</p>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section reveal">
+  <div class="stats-row"><div class="stat-box"><div class="sn">3×</div><div class="sl">Sales Meningkat</div></div><div class="stat-box"><div class="sn">10K+</div><div class="sl">Views/Live</div></div><div class="stat-box"><div class="sn">5.0⭐</div><div class="sl">Rating Toko</div></div><div class="stat-box"><div class="sn">Flash Sale</div><div class="sl">Harian</div></div></div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-section">
+  <div>
+    <h2 class="section-title reveal">Tentang <em>Project</em></h2>
+    <p class="overview-text reveal d1">Pengelolaan toko online end-to-end di berbagai marketplace — mulai dari setup toko, optimasi listing produk, strategi flash sale harian, manajemen harga kompetitif, hingga produksi Shopee Live dan TikTok Live Shopping. Setiap strategi dirancang untuk memaksimalkan visibility produk dan meningkatkan konversi penjualan secara konsisten.</p>
+    <div class="feats-list">
+<div class="feat-item"><div class="feat-icon">💰</div><div><div class="feat-title">Strategi Harga Kompetitif</div><div class="feat-desc">Analisis harga pesaing dan penetapan harga optimal untuk setiap produk</div></div></div><div class="feat-item"><div class="feat-icon">⚡</div><div><div class="feat-title">Flash Sale Management</div><div class="feat-desc">Jadwal flash sale strategis di waktu peak hour untuk maksimalkan penjualan</div></div></div><div class="feat-item"><div class="feat-icon">🎬</div><div><div class="feat-title">Shopee & TikTok Live</div><div class="feat-desc">Setup scene, overlay grafis, script, dan strategi engagement penonton live</div></div></div><div class="feat-item"><div class="feat-icon">📢</div><div><div class="feat-title">Iklan Shopee & TopAds</div><div class="feat-desc">Manajemen iklan berbayar dengan ROI optimal dan targeting yang tepat</div></div></div><div class="feat-item"><div class="feat-icon">📸</div><div><div class="feat-title">Optimasi Listing Produk</div><div class="feat-desc">Foto produk HD, copywriting persuasif, dan SEO marketplace</div></div></div><div class="feat-item"><div class="feat-icon">⭐</div><div><div class="feat-title">Manajemen Rating</div><div class="feat-desc">Strategi follow-up pembeli untuk mempertahankan rating bintang 5</div></div></div>
+    </div>
+  </div>
+  <div class="proj-sidebar">
+    <div class="sidebar-card reveal">
+      <div class="sc-title">Tech Stack</div>
+      <div class="tags-wrap"><span class="tag">Shopee Seller Center</span><span class="tag">TikTok Shop</span><span class="tag">Shopee Ads</span><span class="tag">TopAds</span><span class="tag">OBS Studio</span><span class="tag">CapCut</span><span class="tag">Canva Pro</span></div>
+    </div>
+    <div class="cta-card reveal d1">
+      <h3>Tertarik dengan project ini?</h3>
+      <p>Hubungi saya untuk diskusi project serupa atau kolaborasi bersama.</p>
+      <a href="index.html#contact" class="btn-lime">Hubungi Sekarang ↗</a>
+      <a href="index.html#projects" class="btn-outline">Lihat Project Lain</a>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-section">
+  <h2 class="section-title reveal">Hasil yang <em>Dicapai</em></h2>
+  <div class="results-grid reveal d1"><div class="result-item"><div class="ri-num">3×</div><div class="ri-label">Sales Meningkat</div></div><div class="result-item"><div class="ri-num">10K+</div><div class="ri-label">Views/Live</div></div><div class="result-item"><div class="ri-num">5.0⭐</div><div class="ri-label">Rating</div></div><div class="result-item"><div class="ri-num">95%</div><div class="ri-label">Kepuasan Pembeli</div></div></div>
+</div>
+
+<!-- NEXT PROJECT -->
+<div class="next-section reveal">
+  <div>
+    <div class="next-label">Project Berikutnya</div>
+    <div class="next-title">Pembuatan E-Book Interaktif</div>
+  </div>
+  <a href="project-ebook.html" class="btn-next">Lihat Project <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let rx=-200,ry=-200;
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';rx=e.clientX;ry=e.clientY;});
+(function a(){ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

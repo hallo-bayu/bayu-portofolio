@@ -578,7 +578,7 @@ section { padding: 0; }
 }
 
 /* ============================================
-   FEATURED PROJECTS — LIGHT
+   FEATURED PROJECTS — PREMIUM EDITORIAL
 ============================================ */
 #projects {
   padding: 100px 0;
@@ -594,81 +594,287 @@ section { padding: 0; }
   background-size: 48px 48px;
   pointer-events: none;
 }
-.projects-header {
-  display: flex; align-items: flex-end;
-  justify-content: space-between; margin-bottom: 56px;
+
+/* Header */
+.projects-header-new {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw 60px;
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 40px;
+}
+
+/* Title block */
+.projects-title-block {}
+.projects-label-new {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-sans); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #aaa;
+  margin-bottom: 14px;
+}
+.projects-label-dot { width: 6px; height: 6px; border-radius: 50%; background: #b6f000; }
+
+.projects-title-new {
+  font-family: var(--font-head);
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 900; text-transform: uppercase;
+  line-height: 1; letter-spacing: -0.02em; color: #111;
+}
+.projects-title-new .title-line2 {
+  display: block; position: relative;
+  color: #111; font-style: italic;
+}
+/* Lime brush highlight */
+.projects-title-new .title-line2::before {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: -6px; right: -6px;
+  height: 38%;
+  background: #b6f000;
+  z-index: -1;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+/* Desc block middle */
+.projects-desc-block {
+  padding-top: 8px;
+  border-left: 1px solid rgba(0,0,0,0.1);
+  padding-left: 36px;
+  max-width: 340px;
+}
+.projects-desc-text {
+  font-family: var(--font-sans); font-size: 0.9rem; font-weight: 300;
+  color: #888; line-height: 1.8;
+}
+
+/* Stats badge right */
+.projects-stats-badge {
+  display: flex; align-items: center; gap: 16px;
+  padding-top: 8px;
+}
+.stats-arrow {
+  font-size: 1.8rem; color: #111; transform: rotate(10deg);
+  font-family: serif;
+}
+.stats-icon-wrap {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(182,240,0,0.15); border: 2px solid rgba(182,240,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.stats-text-block {}
+.stats-num {
+  font-family: var(--font-head); font-size: 2.5rem; font-weight: 900;
+  color: #111; line-height: 1; letter-spacing: -0.02em;
+}
+.stats-label {
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 400; color: #aaa;
+}
+.stats-underline {
+  width: 100%; height: 3px; background: #b6f000;
+  border-radius: 2px; margin-top: 4px;
+  position: relative; overflow: hidden;
+}
+.stats-underline::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, #b6f000, #d4ff4d);
+}
+
+/* Project cards list */
+.projects-list-new {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw;
+  display: flex; flex-direction: column; gap: 24px;
   position: relative; z-index: 1;
 }
-.projects-title {
-  font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 5vw, 5rem);
-  font-weight: 700; line-height: 1;
-  letter-spacing: -0.02em; color: #111;
+
+/* Card */
+.proj-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 20px; overflow: hidden;
+  display: grid; grid-template-columns: 380px 1fr;
+  min-height: 280px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: all 0.4s cubic-bezier(.23,1,.32,1);
+  cursor: pointer; position: relative;
 }
-.projects-title em { font-style: italic; }
-.projects-count {
-  font-family: var(--font-sans);
-  font-size: 0.78rem; font-weight: 400;
-  letter-spacing: 0.06em; color: #bbb; padding-bottom: 6px;
+.proj-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.12);
 }
-.project-list { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
-.project-card {
-  display: grid; grid-template-columns: 300px 1fr;
-  background: #fff; border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 14px; overflow: hidden;
-  transition: all 0.35s cubic-bezier(.23,1,.32,1); cursor: pointer; position: relative;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-}
-.project-card:hover { border-color: rgba(0,0,0,0.14); box-shadow: 0 16px 48px rgba(0,0,0,0.10); transform: translateY(-4px); }
-.project-thumb {
-  height: 240px; position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.project-thumb-placeholder {
-  width: 100%; height: 100%;
-  display: flex; align-items: center; justify-content: center; font-size: 3.5rem;
-}
-.thumb-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.22);
-  opacity: 0; transition: opacity 0.3s;
+
+/* Card left visual */
+.proj-visual {
+  position: relative; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
-.project-card:hover .thumb-overlay { opacity: 1; }
-.thumb-icon {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: #fff; display: flex; align-items: center;
-  justify-content: center; font-size: 1.1rem; color: #111; font-weight: 700;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+.proj-visual-bg {
+  position: absolute; inset: 0;
 }
-.project-body { padding: 32px 36px; display: flex; flex-direction: column; justify-content: space-between; }
-.project-cat {
+.proj-num {
+  position: absolute; bottom: 16px; left: 20px;
+  font-family: var(--font-head); font-size: 5rem; font-weight: 900;
+  color: rgba(255,255,255,0.08); line-height: 1; z-index: 0;
+  font-style: italic;
+}
+.proj-main-icon {
+  font-size: 4rem; position: relative; z-index: 2;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+}
+/* Floating wp icon */
+.proj-float-icon {
+  position: absolute; bottom: 24px; left: 24px; z-index: 3;
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Dot grid deco */
+.proj-dot-grid {
+  position: absolute; top: 16px; left: 16px; z-index: 1;
+  display: grid; grid-template-columns: repeat(5, 8px); gap: 6px;
+}
+.proj-dot-grid span {
+  display: block; width: 3px; height: 3px;
+  border-radius: 50%; background: rgba(255,255,255,0.2);
+}
+/* Lime circle deco */
+.proj-lime-circle {
+  position: absolute; bottom: -30px; right: -30px;
+  width: 120px; height: 120px; border-radius: 50%;
+  border: 3px solid rgba(182,240,0,0.3);
+  z-index: 1;
+}
+.proj-lime-circle2 {
+  position: absolute; bottom: -50px; right: -50px;
+  width: 160px; height: 160px; border-radius: 50%;
+  border: 2px solid rgba(182,240,0,0.15);
+  z-index: 1;
+}
+
+/* Mock dashboard UI */
+.proj-mock {
+  position: absolute; right: -10px; top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px; padding: 14px;
+  width: 160px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  z-index: 4;
+}
+.mock-title { font-family: var(--font-sans); font-size: 0.6rem; font-weight: 600; color: #333; margin-bottom: 10px; }
+.mock-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.mock-stat { text-align: center; }
+.mock-stat .mn { font-family: var(--font-head); font-size: 1rem; font-weight: 800; color: #111; }
+.mock-stat .ml { font-size: 0.5rem; color: #aaa; }
+.mock-chart { height: 32px; display: flex; align-items: flex-end; gap: 2px; }
+.mock-bar { flex: 1; border-radius: 2px; background: #b6f000; opacity: 0.7; }
+
+/* Card right content */
+.proj-content {
+  padding: 36px 36px 36px 40px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+}
+
+/* Category badge top right */
+.proj-cat-badge {
+  position: absolute; top: -1px; right: -1px;
+  background: #111; color: #fff;
+  font-family: var(--font-head); font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 0 20px 0 14px;
+}
+
+.proj-cat-new {
   font-family: var(--font-sans); font-size: 0.67rem; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: #bbb; margin-bottom: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #bbb;
+  margin-bottom: 12px; margin-top: 28px;
 }
-.project-title {
-  font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700;
-  line-height: 1.2; margin-bottom: 12px; color: #111; letter-spacing: -0.01em;
+.proj-title-new {
+  font-family: var(--font-head); font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 800; text-transform: uppercase;
+  letter-spacing: -0.01em; line-height: 1.1; color: #111;
+  margin-bottom: 14px;
 }
-.project-desc { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 300; color: #888; line-height: 1.75; margin-bottom: 22px; flex: 1; }
-.project-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.ptag {
-  font-family: var(--font-sans); font-size: 0.68rem; font-weight: 400;
+.proj-desc-new {
+  font-family: var(--font-sans); font-size: 0.85rem; font-weight: 300;
+  color: #888; line-height: 1.75; margin-bottom: 20px; flex: 1;
+}
+.proj-tags-new { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 24px; }
+.proj-tag-new {
+  font-family: var(--font-sans); font-size: 0.7rem; font-weight: 400;
   background: #f4f4f2; border: 1px solid rgba(0,0,0,0.08);
-  color: #999; padding: 4px 12px; border-radius: 100px;
+  color: #888; padding: 5px 14px; border-radius: 100px;
+  transition: all 0.2s;
 }
-.project-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-sans); font-size: 0.78rem; font-weight: 500; color: #111;
-  text-decoration: underline; text-underline-offset: 4px;
-  text-decoration-color: rgba(0,0,0,0.2); transition: gap 0.2s, text-decoration-color 0.2s;
+.proj-card:hover .proj-tag-new { border-color: rgba(0,0,0,0.14); }
+
+/* CTA link */
+.proj-cta-new {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-sans); font-size: 0.85rem; font-weight: 500;
+  color: #111; text-decoration: none; position: relative;
 }
-.project-link:hover { gap: 10px; text-decoration-color: #111; }
-.project-link svg { width: 12px; height: 12px; }
-.project-num {
-  position: absolute; top: 14px; left: 14px;
-  font-family: var(--font-serif); font-size: 5rem; font-weight: 700;
-  font-style: italic; color: rgba(0,0,0,0.04); line-height: 1;
+.proj-cta-new::after {
+  content: '';
+  position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1.5px; background: #111;
+  transition: width 0.3s ease;
+}
+.proj-card:hover .proj-cta-new::after { width: 100%; }
+.proj-cta-new .cta-arrow {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #111; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  transition: transform 0.2s, background 0.2s;
+}
+.proj-card:hover .proj-cta-new .cta-arrow {
+  transform: rotate(45deg);
+  background: #b6f000; color: #111;
+}
+
+/* Lime launch btn */
+.proj-launch {
+  position: absolute; bottom: 32px; right: 32px;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: #b6f000; color: #111;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 16px rgba(182,240,0,0.4);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.proj-card:hover .proj-launch {
+  transform: scale(1.1) rotate(-10deg);
+  box-shadow: 0 8px 24px rgba(182,240,0,0.5);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .proj-card { grid-template-columns: 300px 1fr; }
+  .projects-header-new { grid-template-columns: auto 1fr; }
+  .projects-stats-badge { display: none; }
+}
+@media (max-width: 768px) {
+  .proj-card { grid-template-columns: 1fr; }
+  .proj-visual { height: 220px; }
+  .proj-mock { display: none; }
+  .projects-header-new { grid-template-columns: 1fr; gap: 24px; }
+  .projects-desc-block { border-left: none; padding-left: 0; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 20px; }
 }
 
 /* ============================================
@@ -1134,88 +1340,313 @@ footer {
 
 <!-- ===================== PROJECTS ===================== -->
 <section id="projects">
-  <div class="container">
-    <div class="projects-header reveal">
-      <div>
-        <p class="section-label">My Work</p>
-        <h2 class="projects-title">Featured<br>Projects</h2>
-      </div>
-      <span class="projects-count">04 Projects</span>
+
+  <!-- Header -->
+  <div class="projects-header-new">
+    <div class="projects-title-block reveal">
+      <div class="projects-label-new"><span class="projects-label-dot"></span>My Work</div>
+      <div class="projects-title-new">Featured<span class="title-line2">Projects.</span></div>
     </div>
-    <div class="project-list">
-      <div class="project-card reveal">
-        <div class="project-thumb">
-          <div class="project-thumb-placeholder" style="background:linear-gradient(135deg,#0f2027,#2c5364);">🌐</div>
-          <div class="thumb-overlay"><div class="thumb-icon">→</div></div>
-          <div class="project-num">01</div>
-        </div>
-        <div class="project-body">
-          <div>
-            <p class="project-cat">WordPress · LMS</p>
-            <h3 class="project-title">Platform E-Learning<br>Sekolah Menengah</h3>
-            <p class="project-desc">Website LMS berbasis WordPress dengan LearnDash — kelas online, kuis interaktif, sertifikat digital otomatis, dan laporan kemajuan siswa real-time.</p>
-          </div>
-          <div class="project-meta">
-            <div class="project-tags"><span class="ptag">WordPress</span><span class="ptag">LearnDash</span><span class="ptag">Elementor</span><span class="ptag">PHP</span></div>
-            <a href="#" class="project-link">Visit Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-thumb">
-          <div class="project-thumb-placeholder" style="background:linear-gradient(135deg,#1a0533,#2d1b69);">📢</div>
-          <div class="thumb-overlay"><div class="thumb-icon">→</div></div>
-          <div class="project-num">02</div>
-        </div>
-        <div class="project-body">
-          <div>
-            <p class="project-cat">Video Editing · Social Media</p>
-            <h3 class="project-title">Konten Video Pendek<br>& Reels Production</h3>
-            <p class="project-desc">Produksi & editing video pendek untuk promosi media sosial — Reels Instagram, TikTok, motion graphics, caption dinamis, dan color grading cinematic.</p>
-          </div>
-          <div class="project-meta">
-            <div class="project-tags"><span class="ptag">Premiere Pro</span><span class="ptag">After Effects</span><span class="ptag">CapCut</span></div>
-            <a href="#" class="project-link">Visit Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card reveal reveal-delay-2">
-        <div class="project-thumb">
-          <div class="project-thumb-placeholder" style="background:linear-gradient(135deg,#1a0a00,#7c4000);">🛒</div>
-          <div class="thumb-overlay"><div class="thumb-icon">→</div></div>
-          <div class="project-num">03</div>
-        </div>
-        <div class="project-body">
-          <div>
-            <p class="project-cat">E-Commerce · Shopee · TikTok</p>
-            <h3 class="project-title">Manajemen Toko<br>Multi-Platform</h3>
-            <p class="project-desc">Pengelolaan toko Shopee, Grab, dan TikTok Live end-to-end: setup, optimasi harga, flash sale, copywriting produk SEO, dan analisis performa penjualan.</p>
-          </div>
-          <div class="project-meta">
-            <div class="project-tags"><span class="ptag">Shopee</span><span class="ptag">TikTok Shop</span><span class="ptag">Grab</span><span class="ptag">Canva Pro</span></div>
-            <a href="#" class="project-link">Visit Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          </div>
-        </div>
-      </div>
-      <div class="project-card reveal reveal-delay-3">
-        <div class="project-thumb">
-          <div class="project-thumb-placeholder" style="background:linear-gradient(135deg,#001a0f,#006b3c);">🎓</div>
-          <div class="thumb-overlay"><div class="thumb-icon">→</div></div>
-          <div class="project-num">04</div>
-        </div>
-        <div class="project-body">
-          <div>
-            <p class="project-cat">EdTech · Instructional Design</p>
-            <h3 class="project-title">Media Pembelajaran<br>Interaktif Digital</h3>
-            <p class="project-desc">Pengembangan media pembelajaran interaktif saat magang di Dinas Pendidikan Jabar & SMK Negeri 3 — modul digital, video tutorial, dan Google Classroom.</p>
-          </div>
-          <div class="project-meta">
-            <div class="project-tags"><span class="ptag">Moodle</span><span class="ptag">G-Classroom</span><span class="ptag">Canva Edu</span></div>
-            <a href="#" class="project-link">Visit Project <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-          </div>
-        </div>
+    <div class="projects-desc-block reveal reveal-delay-1">
+      <p class="projects-desc-text">Berbagai solusi digital yang saya bangun — dari landing page, e-learning, travel, UMKM, plugin AI, hingga e-book dan website teroptimasi AI.</p>
+    </div>
+    <div class="projects-stats-badge reveal reveal-delay-2">
+      <div class="stats-arrow">↗</div>
+      <div class="stats-icon-wrap">📁</div>
+      <div class="stats-text-block">
+        <div class="stats-num">08+</div>
+        <div class="stats-label">Projects Completed</div>
+        <div class="stats-underline"></div>
       </div>
     </div>
+  </div>
+
+  <div class="projects-list-new">
+
+    <!-- 1: Landing Page -->
+    <div class="proj-card reveal" onclick="window.location='project-landing.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#0f1f35,#1a3a5c,#0d2137);"></div>
+        <div class="proj-num">01</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🖥️</div>
+        <div class="proj-float-icon">✨</div>
+        <svg style="position:absolute;bottom:10px;left:10px;width:80px;opacity:0.4;" viewBox="0 0 80 80" fill="none"><path d="M10 70 Q40 10 70 40 Q90 60 50 70" stroke="#b6f000" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+        <div class="proj-mock">
+          <div class="mock-title">Landing Page</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">99</div><div class="ml">Speed</div></div>
+            <div class="mock-stat"><div class="mn">A+</div><div class="ml">SEO</div></div>
+            <div class="mock-stat"><div class="mn">100%</div><div class="ml">Mobile</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:60%;"></div><div class="mock-bar" style="height:80%;"></div>
+            <div class="mock-bar" style="height:70%;"></div><div class="mock-bar" style="height:95%;"></div>
+            <div class="mock-bar" style="height:85%;"></div><div class="mock-bar" style="height:100%;"></div>
+            <div class="mock-bar" style="height:90%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge">Landing Page</span>
+        <div class="proj-cat-new">WordPress · Landing Page</div>
+        <h3 class="proj-title-new">Landing Page<br>Profesional</h3>
+        <p class="proj-desc-new">Landing page modern berbasis WordPress dengan desain premium, animasi scroll, konversi tinggi, SEO optimal, dan fully responsive untuk semua perangkat.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress</span><span class="proj-tag-new">Elementor</span><span class="proj-tag-new">SEO</span><span class="proj-tag-new">Responsive</span><span class="proj-tag-new">CRO</span></div>
+        <a href="project-landing.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 2: E-Learning -->
+    <div class="proj-card reveal reveal-delay-1" onclick="window.location='project-elearning.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#064e3b,#065f46,#022c22);"></div>
+        <div class="proj-num">02</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🎓</div>
+        <div class="proj-float-icon">🌐</div>
+        <div class="proj-mock">
+          <div class="mock-title">Dashboard Siswa</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">1,248</div><div class="ml">Siswa</div></div>
+            <div class="mock-stat"><div class="mn">32</div><div class="ml">Kursus</div></div>
+            <div class="mock-stat"><div class="mn">386</div><div class="ml">Sertifikat</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:40%;background:#34d399;"></div><div class="mock-bar" style="height:65%;background:#34d399;"></div>
+            <div class="mock-bar" style="height:55%;background:#b6f000;"></div><div class="mock-bar" style="height:80%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:70%;background:#b6f000;"></div><div class="mock-bar" style="height:90%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:85%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#065f46;">LMS Project</span>
+        <div class="proj-cat-new">WordPress · LMS</div>
+        <h3 class="proj-title-new">Platform E-Learning<br>WordPress</h3>
+        <p class="proj-desc-new">Website LMS berbasis WordPress dengan LearnDash — kelas online, kuis interaktif, sertifikat otomatis, dashboard siswa, dan monitoring progres belajar real-time.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress</span><span class="proj-tag-new">LearnDash</span><span class="proj-tag-new">Elementor</span><span class="proj-tag-new">WooCommerce</span><span class="proj-tag-new">PHP</span></div>
+        <a href="project-elearning.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 3: Web Travel -->
+    <div class="proj-card reveal reveal-delay-2" onclick="window.location='project-travel.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#0c4a6e,#0369a1,#082f49);"></div>
+        <div class="proj-num">03</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">✈️</div>
+        <div class="proj-float-icon">🗺️</div>
+        <svg style="position:absolute;top:16px;right:16px;width:60px;opacity:0.3;" viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="25" stroke="#b6f000" stroke-width="2" stroke-dasharray="6 4"/></svg>
+        <div class="proj-mock">
+          <div class="mock-title">Travel Bookings</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">50+</div><div class="ml">Destinasi</div></div>
+            <div class="mock-stat"><div class="mn">4.9⭐</div><div class="ml">Rating</div></div>
+            <div class="mock-stat"><div class="mn">200+</div><div class="ml">Booking</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:50%;background:#38bdf8;"></div><div class="mock-bar" style="height:65%;background:#38bdf8;"></div>
+            <div class="mock-bar" style="height:75%;background:#b6f000;"></div><div class="mock-bar" style="height:90%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:80%;background:#b6f000;"></div><div class="mock-bar" style="height:95%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:85%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#0369a1;">Travel</span>
+        <div class="proj-cat-new">WordPress · Travel</div>
+        <h3 class="proj-title-new">Web Travel<br>WordPress</h3>
+        <p class="proj-desc-new">Website travel agent profesional dengan sistem booking online, galeri destinasi, paket wisata, testimoni, dan integrasi payment gateway untuk kemudahan transaksi.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress</span><span class="proj-tag-new">WooCommerce</span><span class="proj-tag-new">Booking System</span><span class="proj-tag-new">Payment</span></div>
+        <a href="project-travel.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 4: UMKM -->
+    <div class="proj-card reveal reveal-delay-3" onclick="window.location='project-umkm.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#7c2d12,#9a3412,#431407);"></div>
+        <div class="proj-num">04</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🏪</div>
+        <div class="proj-float-icon">💼</div>
+        <div class="proj-mock">
+          <div class="mock-title">Bisnis UMKM</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">3×</div><div class="ml">Omzet</div></div>
+            <div class="mock-stat"><div class="mn">100+</div><div class="ml">Produk</div></div>
+            <div class="mock-stat"><div class="mn">5.0⭐</div><div class="ml">Rating</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:35%;background:#fb923c;"></div><div class="mock-bar" style="height:50%;background:#fb923c;"></div>
+            <div class="mock-bar" style="height:65%;background:#b6f000;"></div><div class="mock-bar" style="height:80%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:75%;background:#b6f000;"></div><div class="mock-bar" style="height:95%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:100%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#9a3412;">UMKM</span>
+        <div class="proj-cat-new">WordPress · Bisnis</div>
+        <h3 class="proj-title-new">Web Bisnis<br>UMKM WordPress</h3>
+        <p class="proj-desc-new">Website bisnis modern untuk UMKM — company profile, katalog produk, WooCommerce, WhatsApp integration, dan SEO lokal untuk meningkatkan visibilitas bisnis.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress</span><span class="proj-tag-new">WooCommerce</span><span class="proj-tag-new">SEO Lokal</span><span class="proj-tag-new">WhatsApp API</span></div>
+        <a href="project-umkm.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 5: Plugin AI -->
+    <div class="proj-card reveal" onclick="window.location='project-plugin.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#1e1b4b,#3730a3,#0f0e2e);"></div>
+        <div class="proj-num">05</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🤖</div>
+        <div class="proj-float-icon">⚡</div>
+        <svg style="position:absolute;bottom:16px;right:16px;width:70px;opacity:0.2;" viewBox="0 0 70 70" fill="none"><rect x="10" y="10" width="50" height="50" rx="8" stroke="#b6f000" stroke-width="2"/><rect x="20" y="20" width="30" height="30" rx="4" stroke="#b6f000" stroke-width="1.5"/></svg>
+        <div class="proj-mock">
+          <div class="mock-title">AI Plugin</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">AI</div><div class="ml">Powered</div></div>
+            <div class="mock-stat"><div class="mn">10×</div><div class="ml">Faster</div></div>
+            <div class="mock-stat"><div class="mn">Auto</div><div class="ml">Optimize</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:30%;background:#818cf8;"></div><div class="mock-bar" style="height:50%;background:#818cf8;"></div>
+            <div class="mock-bar" style="height:70%;background:#b6f000;"></div><div class="mock-bar" style="height:85%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:90%;background:#b6f000;"></div><div class="mock-bar" style="height:95%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:100%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#3730a3;">AI Plugin</span>
+        <div class="proj-cat-new">WordPress · AI</div>
+        <h3 class="proj-title-new">Plugin WordPress<br>AI Optimizer</h3>
+        <p class="proj-desc-new">Plugin WordPress custom dengan integrasi AI — auto-generate konten SEO, optimasi gambar otomatis, analisis performa, dan rekomendasi peningkatan website secara real-time.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress Plugin</span><span class="proj-tag-new">ChatGPT API</span><span class="proj-tag-new">PHP</span><span class="proj-tag-new">REST API</span></div>
+        <a href="project-plugin.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 6: Manajemen Toko Online -->
+    <div class="proj-card reveal reveal-delay-1" onclick="window.location='project-toko.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#1a0533,#2d1060,#150a2e);"></div>
+        <div class="proj-num">06</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🛒</div>
+        <div class="proj-float-icon">💰</div>
+        <div class="proj-mock">
+          <div class="mock-title">Toko Online</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">Flash</div><div class="ml">Sale</div></div>
+            <div class="mock-stat"><div class="mn">Live</div><div class="ml">Shopee</div></div>
+            <div class="mock-stat"><div class="mn">3×</div><div class="ml">Sales</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:40%;background:#a78bfa;"></div><div class="mock-bar" style="height:60%;background:#a78bfa;"></div>
+            <div class="mock-bar" style="height:75%;background:#b6f000;"></div><div class="mock-bar" style="height:85%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:80%;background:#b6f000;"></div><div class="mock-bar" style="height:95%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:100%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#6d28d9;">E-Commerce</span>
+        <div class="proj-cat-new">Shopee · TikTok · Live</div>
+        <h3 class="proj-title-new">Manajemen Toko<br>Online & Flash Sale</h3>
+        <p class="proj-desc-new">Pengelolaan toko online end-to-end — atur harga, flash sale, Shopee Live, TikTok Live Shopping, iklan berbayar, dan analisis performa penjualan harian.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">Shopee</span><span class="proj-tag-new">TikTok Shop</span><span class="proj-tag-new">Flash Sale</span><span class="proj-tag-new">Live Shopping</span></div>
+        <a href="project-toko.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 7: E-Book -->
+    <div class="proj-card reveal reveal-delay-2" onclick="window.location='project-ebook.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#14532d,#15803d,#052e16);"></div>
+        <div class="proj-num">07</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">📖</div>
+        <div class="proj-float-icon">🎨</div>
+        <div class="proj-mock">
+          <div class="mock-title">E-Book Stats</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">50+</div><div class="ml">Halaman</div></div>
+            <div class="mock-stat"><div class="mn">HD</div><div class="ml">Quality</div></div>
+            <div class="mock-stat"><div class="mn">PDF</div><div class="ml">Format</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:55%;background:#4ade80;"></div><div class="mock-bar" style="height:70%;background:#4ade80;"></div>
+            <div class="mock-bar" style="height:80%;background:#b6f000;"></div><div class="mock-bar" style="height:90%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:85%;background:#b6f000;"></div><div class="mock-bar" style="height:95%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:100%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#15803d;">E-Book</span>
+        <div class="proj-cat-new">Education · Digital</div>
+        <h3 class="proj-title-new">Pembuatan<br>E-Book Interaktif</h3>
+        <p class="proj-desc-new">Desain dan produksi e-book profesional — layout editorial modern, infografis interaktif, PDF interaktif dengan hyperlink, dan distribusi digital melalui platform LMS.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">Canva Pro</span><span class="proj-tag-new">PDF Interactive</span><span class="proj-tag-new">Figma</span><span class="proj-tag-new">LMS</span></div>
+        <a href="project-ebook.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
+    <!-- 8: Website AI Optimal -->
+    <div class="proj-card reveal reveal-delay-3" onclick="window.location='project-aisite.html'">
+      <div class="proj-visual">
+        <div class="proj-visual-bg" style="background:linear-gradient(135deg,#1c1917,#292524,#0c0a09);"></div>
+        <div class="proj-num">08</div>
+        <div class="proj-dot-grid"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="proj-lime-circle"></div><div class="proj-lime-circle2"></div>
+        <div class="proj-main-icon">🚀</div>
+        <div class="proj-float-icon">🧠</div>
+        <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;opacity:0.06;" viewBox="0 0 140 140" fill="none"><circle cx="70" cy="70" r="65" stroke="white" stroke-width="1"/><circle cx="70" cy="70" r="45" stroke="white" stroke-width="1"/><circle cx="70" cy="70" r="25" stroke="white" stroke-width="1"/></svg>
+        <div class="proj-mock">
+          <div class="mock-title">AI Website</div>
+          <div class="mock-stats">
+            <div class="mock-stat"><div class="mn">100</div><div class="ml">PageSpeed</div></div>
+            <div class="mock-stat"><div class="mn">AI</div><div class="ml">Content</div></div>
+            <div class="mock-stat"><div class="mn">A+</div><div class="ml">Grade</div></div>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar" style="height:70%;background:#f59e0b;"></div><div class="mock-bar" style="height:80%;background:#f59e0b;"></div>
+            <div class="mock-bar" style="height:85%;background:#b6f000;"></div><div class="mock-bar" style="height:92%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:96%;background:#b6f000;"></div><div class="mock-bar" style="height:98%;background:#b6f000;"></div>
+            <div class="mock-bar" style="height:100%;background:#b6f000;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-content">
+        <span class="proj-cat-badge" style="background:#44403c;">AI Website</span>
+        <div class="proj-cat-new">WordPress · AI Optimization</div>
+        <h3 class="proj-title-new">Website dengan<br>AI Optimization</h3>
+        <p class="proj-desc-new">Membangun website dengan workflow AI penuh — copywriting AI, image generation, code optimization, SEO AI, dan performa PageSpeed 100 untuk hasil maksimal.</p>
+        <div class="proj-tags-new"><span class="proj-tag-new">WordPress</span><span class="proj-tag-new">ChatGPT</span><span class="proj-tag-new">Midjourney</span><span class="proj-tag-new">AI SEO</span></div>
+        <a href="project-aisite.html" class="proj-cta-new">Lihat Detail Project <span class="cta-arrow">↗</span></a>
+        <div class="proj-launch">↗</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
