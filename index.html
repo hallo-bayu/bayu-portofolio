@@ -544,18 +544,70 @@ body.cursor-visible #cursor-bubble {
 
 /* Responsive hero */
 @media (max-width: 900px) {
-  .hero-inner { grid-template-columns: 1fr; min-height: auto; padding: 40px 24px 80px; gap: 40px; }
-  .hero-left-col { padding-right: 0; }
-  .hero-right-col { height: 60vw; min-height: 320px; }
-  .hero-photo-new { width: 65vw; }
-  .hero-circle-bg { width: 70vw; height: 70vw; }
-  .hero-hello-card { left: 0; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 24px 20px 60px;
+    gap: 24px;
+  }
+  .hero-left-col { padding-right: 0; order: 2; }
+  .hero-right-col { order: 1; }
+
+  /* RIGHT COL — photo area, lebih compact */
+  .hero-right-col {
+    height: auto;
+    min-height: unset;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  /* Photo — lebih kecil dan centered */
+  .hero-photo-new {
+    width: 55vw;
+    max-width: 220px;
+    margin: 0 auto;
+    bottom: 0;
+  }
+
+  /* SEMBUNYIKAN semua floating card di mobile */
+  .hero-hello-card { display: none; }
+  .hero-avail-card { display: none; }
+  .hero-tech-badge { display: none; }
   .hero-intro-num { display: none; }
+  .phys-el { display: none; }
+  .proj-dot-grid { display: none; }
+
+  /* Ganti dengan info card ringkas di bawah foto */
+  .hero-mobile-info {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
 }
+
 @media (max-width: 600px) {
-  .hero-headline { font-size: clamp(2.6rem, 10vw, 4rem); }
-  .hero-right-col { height: 80vw; }
-  .hero-photo-new { width: 80vw; }
+  .hero-headline { font-size: clamp(2.4rem, 9vw, 3.5rem); }
+  .hero-headline-row { gap: 10px; }
+  .hero-photo-new { width: 50vw; max-width: 180px; }
+
+  /* Tags row — wrap rapi */
+  .hero-tags-row { flex-wrap: wrap; gap: 8px; }
+  .hero-tag-divider { display: none; }
+
+  /* Desc text lebih kecil */
+  .hero-desc-new { font-size: 0.85rem; }
+
+  /* CTA full width */
+  .hero-ctas-new { flex-direction: column; gap: 10px; }
+  .btn-black { width: 100%; justify-content: center; }
+  .btn-dl { justify-content: center; }
+
+  /* Find me on */
+  .hero-findme { flex-wrap: wrap; gap: 10px; }
 }
 
 /* ============================================
@@ -1097,8 +1149,8 @@ footer {
   .contact-grid { gap: 50px; }
 }
 @media (max-width: 768px) {
-  .navbar { padding: 16px 20px; }
-  .navbar.scrolled { padding: 12px 20px; }
+  .navbar { padding: 14px 20px; }
+  .navbar.scrolled { padding: 10px 20px; }
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
@@ -1107,15 +1159,22 @@ footer {
   .hero-portrait-inline { width: 120px; height: 98px; }
   .hero-bottom { grid-template-columns: 1fr 1fr; gap: 28px; }
   .hero-float-card { grid-column: 1 / -1; justify-content: flex-start; }
-  .about-full-grid { grid-template-columns: 1fr; gap: 40px; }
-  .about-photo-col { position: static; }
-  .about-photo-main { max-width: 280px; aspect-ratio: 1/1; }
+  .about-full-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-photo-col { position: static; display: flex; flex-direction: column; align-items: center; }
+  .about-photo-main { max-width: 240px; aspect-ratio: 1/1; }
+  .about-section-title { font-size: 1.5rem; }
+  .about-stats-row { grid-template-columns: repeat(3,1fr); }
   .pg-grid { grid-template-columns: 1fr; }
   .pg-card.featured { grid-column: span 1; }
-  .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+  .pg-title { font-size: clamp(2rem, 8vw, 3rem); }
+  .pg-body { padding: 16px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 36px; }
   .form-row { grid-template-columns: 1fr; }
+  .contact-title { font-size: clamp(2rem, 8vw, 3rem); }
   .exp-item { grid-template-columns: 1fr; gap: 4px; }
-  footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+  footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px 20px; }
+  .footer-logo { font-size: 1rem; }
+  .footer-copy { font-size: 0.7rem; }
   .project-card { grid-template-columns: 1fr; }
   .project-thumb { height: 200px; }
 }
@@ -1315,7 +1374,7 @@ footer {
         </div>
       </div>
 
-      <!-- Available card -->
+      <!-- Available card — desktop only (hidden mobile via CSS) -->
       <div class="hero-avail-card" style="bottom:80px;right:-10px;">
         <p style="font-family:'DM Sans',sans-serif;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:10px;font-weight:500;">Available for work</p>
         <p style="font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;color:#111;margin-bottom:2px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#22c55e;margin-right:6px;animation:blinkDot 2s infinite;"></span>Bayu Fadillah Akbar</p>
@@ -1327,6 +1386,29 @@ footer {
 
       <!-- Focused on UX badge removed -->
 
+      <!-- Mobile Info Cards — shown only on mobile -->
+      <div class="hero-mobile-info" style="display:none;">
+        <!-- Available badge -->
+        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;"></span>
+          <div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;color:#111;">Bayu Fadillah Akbar</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:300;color:#999;">Web & LMS Developer · EdTech</div>
+          </div>
+          <div style="margin-left:auto;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#bbb;">Available</div>
+        </div>
+        <!-- Tech stack mini -->
+        <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,0.06);">
+          <span style="font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#bbb;">Tech Stack</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="width:26px;height:26px;border-radius:50%;background:#21759b;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:700;">WP</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:#e2336b;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:700;">EL</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:#8892bf;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:700;">PHP</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:#e34f26;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:700;">H5</span>
+            <span style="width:26px;height:26px;border-radius:50%;background:#f7df1e;color:#222;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:700;">JS</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
