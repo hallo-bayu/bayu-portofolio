@@ -1004,7 +1004,7 @@ section { padding: 0; }
 .exp-desc { font-family: var(--font-sans); font-size: 0.82rem; font-weight: 300; color: #999; line-height: 1.75; }
 
 /* ============================================
-   PORTFOLIO GRID — LIGHT
+   PORTFOLIO GRID — PREMIUM REMAKE
 ============================================ */
 #portfolio-grid {
   padding: 100px 0;
@@ -1020,51 +1020,278 @@ section { padding: 0; }
     linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
   background-size: 48px 48px; pointer-events: none;
 }
-.pg-header { margin-bottom: 56px; position: relative; z-index: 1; }
-.pg-title {
-  font-family: var(--font-serif); font-size: clamp(2.4rem, 4.5vw, 5rem);
-  font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: #111;
-}
-.pg-title em { font-style: italic; }
-.pg-subtitle { font-family: var(--font-sans); font-size: 0.88rem; font-weight: 300; color: #bbb; margin-top: 14px; max-width: 440px; line-height: 1.8; }
 
-.pg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; position: relative; z-index: 1; }
-.pg-card {
-  background: #fff; border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 14px; overflow: hidden;
-  transition: all 0.35s cubic-bezier(.23,1,.32,1); cursor: pointer;
-  display: flex; flex-direction: column;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+/* Header */
+.pg-header-new {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw 50px;
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 40px;
 }
-.pg-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.10); border-color: rgba(0,0,0,0.12); }
-.pg-card.featured { grid-column: span 2; }
-.pg-thumb {
-  aspect-ratio: 16/9; position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center; font-size: 3rem;
+
+.pg-title-block {}
+.pg-label-row {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-sans); font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; color: #bbb;
+  margin-bottom: 14px;
 }
-.pg-card.featured .pg-thumb { aspect-ratio: 16/7; }
-.pg-thumb-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.pg-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.28);
-  opacity: 0; transition: opacity 0.3s;
+.pg-label-dot { width: 6px; height: 6px; border-radius: 50%; background: #b6f000; }
+
+.pg-main-title {
+  font-family: var(--font-head);
+  font-size: clamp(3rem, 5.5vw, 6rem);
+  font-weight: 900; text-transform: uppercase;
+  line-height: 1; letter-spacing: -0.02em; color: #111;
+}
+.pg-main-title .pg-title-italic {
+  display: block; font-style: italic; position: relative;
+}
+.pg-main-title .pg-title-italic::before {
+  content: '';
+  position: absolute; bottom: 2px; left: -4px; right: -4px;
+  height: 38%; background: #b6f000; z-index: -1;
+  border-radius: 4px; opacity: 0.85;
+}
+
+.pg-desc-col {
+  padding-top: 8px;
+  border-left: 1px solid rgba(0,0,0,0.1);
+  padding-left: 36px; max-width: 340px;
+}
+.pg-desc-col p {
+  font-family: var(--font-sans); font-size: 0.9rem; font-weight: 300;
+  color: #888; line-height: 1.8;
+}
+
+/* Deco col */
+.pg-deco-col {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding-top: 4px;
+}
+.pg-deco-circle {
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 2px solid rgba(182,240,0,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  position: relative;
+}
+.pg-deco-circle::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed rgba(182,240,0,0.2);
+  animation: spinSlow 12s linear infinite;
+}
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+.pg-deco-arrow {
+  font-size: 2.5rem; color: #111;
+  transform: rotate(10deg) scaleX(-1);
+  font-family: serif;
+  line-height: 1;
+}
+/* Scribble SVG */
+.pg-scribble {
+  position: absolute; top: 20px; right: 5vw;
+  width: 120px; opacity: 0.6;
+  z-index: 2;
+}
+
+/* Filter + Sort bar */
+.pg-filter-bar {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw 40px;
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.pg-filter-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.pg-filter-tab {
+  font-family: var(--font-sans); font-size: 0.78rem; font-weight: 500;
+  padding: 9px 20px; border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.1); background: #fff;
+  color: #888; cursor: pointer; transition: all .25s;
+  display: flex; align-items: center; gap: 7px;
+}
+.pg-filter-tab:hover { border-color: rgba(0,0,0,0.2); color: #111; }
+.pg-filter-tab.active {
+  background: #111; color: #fff; border-color: #111;
+}
+.pg-filter-tab .tab-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #b6f000; display: none;
+}
+.pg-filter-tab.active .tab-dot { display: block; }
+
+.pg-sort {
+  display: flex; align-items: center; gap: 10px;
+}
+.pg-sort-label {
+  font-family: var(--font-sans); font-size: 0.75rem; font-weight: 400; color: #bbb;
+}
+.pg-sort select {
+  font-family: var(--font-sans); font-size: 0.78rem; font-weight: 500;
+  color: #111; background: #fff; border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px; padding: 7px 12px; cursor: pointer; outline: none;
+  appearance: none;
+}
+
+/* Grid */
+.pg-grid-new {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 5vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  position: relative; z-index: 1;
+}
+
+/* Card */
+.pg-card-new {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 18px; overflow: hidden;
+  transition: all .35s cubic-bezier(.23,1,.32,1);
+  cursor: pointer; display: flex; flex-direction: column;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  position: relative;
+}
+.pg-card-new:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.12);
+}
+.pg-card-new.featured { grid-column: span 2; }
+
+/* Card thumb */
+.pg-card-thumb {
+  position: relative; overflow: hidden;
+  aspect-ratio: 16/9;
   display: flex; align-items: center; justify-content: center;
 }
-.pg-card:hover .pg-overlay { opacity: 1; }
-.pg-overlay-text {
+.pg-card-new.featured .pg-card-thumb { aspect-ratio: 16/7; }
+
+/* Number badge */
+.pg-card-num {
+  position: absolute; top: 14px; left: 14px; z-index: 3;
+  width: 36px; height: 36px; border-radius: 8px;
+  background: #b6f000; color: #111;
+  font-family: var(--font-head); font-size: 0.8rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  letter-spacing: 0.02em;
+}
+
+/* Thumb overlay */
+.pg-card-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.35);
+  opacity: 0; transition: opacity .3s;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+}
+.pg-card-new:hover .pg-card-overlay { opacity: 1; }
+.pg-overlay-btn {
   font-family: var(--font-sans); font-size: 0.75rem; font-weight: 500;
   letter-spacing: 0.08em; text-transform: uppercase;
-  color: #fff; border: 1px solid rgba(255,255,255,0.5);
-  padding: 9px 22px; border-radius: 100px;
+  color: #fff; border: 1px solid rgba(255,255,255,0.6);
+  padding: 10px 24px; border-radius: 100px;
+  background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
 }
-.pg-body { padding: 22px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.pg-cat { font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #bbb; }
-.pg-title-card { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: #111; }
-.pg-desc { font-family: var(--font-sans); font-size: 0.78rem; font-weight: 300; color: #aaa; line-height: 1.65; flex: 1; }
-.pg-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
-.pg-tag {
-  font-family: var(--font-sans); font-size: 0.65rem; font-weight: 400;
+
+/* Mock UI inside thumb */
+.pg-mock-ui {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.pg-mock-screen {
+  width: 100%; max-width: 340px;
+  background: rgba(10,10,20,0.85);
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.pg-mock-bar {
+  height: 28px; background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; padding: 0 12px; gap: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.pg-mock-dot { width: 6px; height: 6px; border-radius: 50%; }
+.pg-mock-body { padding: 12px; }
+.pg-mock-row { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); margin-bottom: 6px; }
+.pg-mock-row.accent { background: #b6f000; opacity: 0.5; }
+.pg-mock-row.short { width: 60%; }
+.pg-mock-row.medium { width: 80%; }
+.pg-mock-chart {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 40px; margin-top: 10px;
+}
+.pg-mock-bar-chart {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: rgba(182,240,0,0.4);
+}
+
+/* Float icon */
+.pg-float-logo {
+  position: absolute; bottom: 16px; right: 16px; z-index: 3;
+  width: 48px; height: 48px; border-radius: 14px;
+  background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+/* Card body */
+.pg-card-body { padding: 22px 22px 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.pg-card-cat {
+  font-family: var(--font-sans); font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #bbb;
+}
+.pg-card-title {
+  font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700;
+  line-height: 1.25; color: #111; letter-spacing: -0.01em;
+}
+.pg-card-desc {
+  font-family: var(--font-sans); font-size: 0.78rem; font-weight: 300;
+  color: #aaa; line-height: 1.65; flex: 1;
+}
+.pg-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.pg-card-tag {
+  font-family: var(--font-sans); font-size: 0.67rem; font-weight: 400;
   background: #f4f4f2; border: 1px solid rgba(0,0,0,0.07);
-  color: #bbb; padding: 3px 10px; border-radius: 100px;
+  color: #aaa; padding: 4px 12px; border-radius: 100px;
+  transition: all .2s;
+}
+.pg-card-new:hover .pg-card-tag { border-color: rgba(0,0,0,0.12); }
+
+/* Empty state when filter no results */
+.pg-empty {
+  grid-column: 1 / -1; text-align: center;
+  padding: 60px 20px; display: none;
+}
+.pg-empty p { font-family: var(--font-sans); font-size: 0.9rem; color: #bbb; }
+
+/* Mobile */
+@media (max-width: 1024px) {
+  .pg-grid-new { grid-template-columns: repeat(2, 1fr); }
+  .pg-card-new.featured { grid-column: span 2; }
+  .pg-header-new { grid-template-columns: auto 1fr; }
+  .pg-deco-col { display: none; }
+}
+@media (max-width: 768px) {
+  .pg-header-new { grid-template-columns: 1fr; gap: 20px; }
+  .pg-desc-col { border-left: none; padding-left: 0; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 16px; max-width: 100%; }
+  .pg-grid-new { grid-template-columns: 1fr; }
+  .pg-card-new.featured { grid-column: span 1; }
+  .pg-filter-bar { flex-direction: column; align-items: flex-start; }
+  .pg-scribble { display: none; }
+  .pg-main-title { font-size: clamp(2.5rem, 9vw, 4rem); }
 }
 
 /* ============================================
@@ -1734,76 +1961,328 @@ footer {
 
 <!-- ===================== PORTFOLIO GRID (NEW) ===================== -->
 <section id="portfolio-grid">
-  <div class="container">
-    <div class="pg-header reveal">
-      <p class="section-label">All Work</p>
-      <h2 class="pg-title">Portfolio<br>Gallery</h2>
-      <p class="pg-subtitle">Koleksi lengkap karya saya — dari web development, desain media, hingga solusi e-commerce dan platform pendidikan digital.</p>
+
+  <!-- Scribble deco -->
+  <svg class="pg-scribble" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 80 Q50 10 90 50" stroke="#b6f000" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M85 45 L95 55 L80 58" stroke="#b6f000" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M30 70 Q60 20 95 55" stroke="#b6f000" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.4"/>
+  </svg>
+
+  <!-- Header -->
+  <div class="pg-header-new">
+    <div class="pg-title-block reveal">
+      <div class="pg-label-row"><span class="pg-label-dot"></span>All Work</div>
+      <div class="pg-main-title">
+        Portfolio
+        <span class="pg-title-italic">Gallery.</span>
+      </div>
     </div>
-    <div class="pg-grid">
-      <div class="pg-card featured reveal" onclick="window.location='wordpress.html'" style="cursor:pointer;">
-        <div class="pg-thumb">
-          <div class="pg-thumb-bg" style="background:linear-gradient(135deg,#0d0d1a,#1a1a40,#2a2a7c);">🖥️</div>
-          <div class="pg-overlay"><span class="pg-overlay-text">Lihat Portfolio WordPress →</span></div>
-        </div>
-        <div class="pg-body">
-          <p class="pg-cat">WordPress · LMS · API</p>
-          <h3 class="pg-title-card">Company Profile + LMS Integration</h3>
-          <p class="pg-desc">Website perusahaan modern dengan LMS terintegrasi, sistem login karyawan, dan dashboard training berbasis WordPress + API custom.</p>
-          <div class="pg-tags"><span class="pg-tag">WordPress</span><span class="pg-tag">PHP</span><span class="pg-tag">API</span><span class="pg-tag">Elementor</span></div>
-        </div>
-      </div>
-      <div class="pg-card reveal reveal-delay-1" onclick="window.location='video.html'" style="cursor:pointer;">
-        <div class="pg-thumb">
-          <div class="pg-thumb-bg" style="background:linear-gradient(135deg,#1a0010,#4a0030);">🎬</div>
-          <div class="pg-overlay"><span class="pg-overlay-text">Lihat Portfolio Video →</span></div>
-        </div>
-        <div class="pg-body">
-          <p class="pg-cat">Video · Social Media</p>
-          <h3 class="pg-title-card">TikTok Live Production</h3>
-          <p class="pg-desc">Setup dan produksi TikTok Live untuk e-commerce, termasuk scene, grafis overlay, dan strategi konten.</p>
-          <div class="pg-tags"><span class="pg-tag">TikTok</span><span class="pg-tag">OBS</span><span class="pg-tag">CapCut</span></div>
-        </div>
-      </div>
-      <div class="pg-card reveal reveal-delay-1" onclick="window.location='ecommerce.html'" style="cursor:pointer;">
-        <div class="pg-thumb">
-          <div class="pg-thumb-bg" style="background:linear-gradient(135deg,#0a1800,#1e4000);">📊</div>
-          <div class="pg-overlay"><span class="pg-overlay-text">Lihat Portfolio E-Commerce →</span></div>
-        </div>
-        <div class="pg-body">
-          <p class="pg-cat">E-Commerce · Analytics</p>
-          <h3 class="pg-title-card">Shopee Store Optimization</h3>
-          <p class="pg-desc">Optimasi menyeluruh toko Shopee: SEO produk, iklan TopAds, flash sale, dan peningkatan rating bintang 5.</p>
-          <div class="pg-tags"><span class="pg-tag">Shopee</span><span class="pg-tag">TopAds</span><span class="pg-tag">SEO</span></div>
-        </div>
-      </div>
-      <div class="pg-card reveal reveal-delay-2" onclick="window.location='wordpress.html'" style="cursor:pointer;">
-        <div class="pg-thumb">
-          <div class="pg-thumb-bg" style="background:linear-gradient(135deg,#1a1000,#4a3000);">🤖</div>
-          <div class="pg-overlay"><span class="pg-overlay-text">Lihat Portfolio WordPress →</span></div>
-        </div>
-        <div class="pg-body">
-          <p class="pg-cat">AI · WordPress</p>
-          <h3 class="pg-title-card">AI-Optimized Web Build</h3>
-          <p class="pg-desc">Membangun website dengan workflow AI — dari copywriting, image generation, hingga code optimization menggunakan tools AI terkini.</p>
-          <div class="pg-tags"><span class="pg-tag">ChatGPT</span><span class="pg-tag">Midjourney</span><span class="pg-tag">WP</span></div>
-        </div>
-      </div>
-      <div class="pg-card reveal reveal-delay-2" onclick="window.location='edtech.html'" style="cursor:pointer;">
-        <div class="pg-thumb">
-          <div class="pg-thumb-bg" style="background:linear-gradient(135deg,#001520,#003050);">📚</div>
-          <div class="pg-overlay"><span class="pg-overlay-text">Lihat Portfolio EdTech →</span></div>
-        </div>
-        <div class="pg-body">
-          <p class="pg-cat">EdTech · Moodle</p>
-          <h3 class="pg-title-card">Moodle LMS Deployment</h3>
-          <p class="pg-desc">Setup dan konfigurasi Moodle untuk sekolah: kursus, kuis online, absensi digital, dan laporan nilai otomatis.</p>
-          <div class="pg-tags"><span class="pg-tag">Moodle</span><span class="pg-tag">PHP</span><span class="pg-tag">MySQL</span></div>
-        </div>
-      </div>
+    <div class="pg-desc-col reveal reveal-delay-1">
+      <p>Koleksi lengkap karya saya — dari web development, desain media, hingga solusi e-commerce dan platform pendidikan digital.</p>
+    </div>
+    <div class="pg-deco-col reveal reveal-delay-2">
+      <div class="pg-deco-arrow">↙</div>
+      <div class="pg-deco-circle">🌐</div>
     </div>
   </div>
+
+  <!-- Filter + Sort -->
+  <div class="pg-filter-bar reveal">
+    <div class="pg-filter-tabs">
+      <button class="pg-filter-tab active" onclick="pgFilter('all', this)">
+        <span class="tab-dot"></span>All Work
+      </button>
+      <button class="pg-filter-tab" onclick="pgFilter('web', this)">Web Development</button>
+      <button class="pg-filter-tab" onclick="pgFilter('ecommerce', this)">E-Commerce</button>
+      <button class="pg-filter-tab" onclick="pgFilter('edtech', this)">EdTech</button>
+      <button class="pg-filter-tab" onclick="pgFilter('design', this)">Design & Media</button>
+    </div>
+    <div class="pg-sort">
+      <span class="pg-sort-label">Sort by</span>
+      <select onchange="pgSort(this.value)">
+        <option value="latest">Latest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="pg-grid-new" id="pgGrid">
+
+    <!-- 1: WordPress LMS - featured -->
+    <div class="pg-card-new featured reveal" data-cat="web" data-date="8" onclick="window.location='project-elearning.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#0d1b2e,#1a3a5c,#0a2540);">
+        <div class="pg-card-num">01</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+              <div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-left:8px;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div class="pg-mock-row accent medium"></div>
+              <div class="pg-mock-row short"></div>
+              <div class="pg-mock-row medium"></div>
+              <div class="pg-mock-chart">
+                <div class="pg-mock-bar-chart" style="height:40%;"></div>
+                <div class="pg-mock-bar-chart" style="height:65%;"></div>
+                <div class="pg-mock-bar-chart" style="height:50%;background:rgba(182,240,0,0.7);"></div>
+                <div class="pg-mock-bar-chart" style="height:80%;background:rgba(182,240,0,0.7);"></div>
+                <div class="pg-mock-bar-chart" style="height:60%;"></div>
+                <div class="pg-mock-bar-chart" style="height:90%;background:rgba(182,240,0,0.9);"></div>
+                <div class="pg-mock-bar-chart" style="height:75%;"></div>
+                <div class="pg-mock-bar-chart" style="height:100%;background:rgba(182,240,0,0.9);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo">🌐</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">WordPress · LMS · API</div>
+        <div class="pg-card-title">Platform E-Learning WordPress</div>
+        <div class="pg-card-desc">Website LMS berbasis WordPress dengan LearnDash — kelas online, kuis interaktif, sertifikat otomatis, dan dashboard siswa real-time.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">WordPress</span><span class="pg-card-tag">LearnDash</span><span class="pg-card-tag">Elementor</span><span class="pg-card-tag">PHP</span></div>
+      </div>
+    </div>
+
+    <!-- 2: Toko Online -->
+    <div class="pg-card-new reveal reveal-delay-1" data-cat="ecommerce" data-date="7" onclick="window.location='project-toko.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#1a0040,#3d0080,#1a0040);">
+        <div class="pg-card-num">02</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div class="pg-mock-row accent"></div>
+              <div class="pg-mock-row short"></div>
+              <div style="display:flex;gap:4px;margin-top:8px;">
+                <div style="width:24px;height:24px;border-radius:4px;background:rgba(255,0,80,0.3);font-size:0.5rem;display:flex;align-items:center;justify-content:center;">LIVE</div>
+                <div style="flex:1;height:6px;margin-top:9px;border-radius:3px;background:rgba(255,255,255,0.06);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;">🛒</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">E-Commerce · Live Shopping</div>
+        <div class="pg-card-title">Manajemen Toko Online & Flash Sale</div>
+        <div class="pg-card-desc">Pengelolaan toko Shopee, TikTok Live Shopping, strategi harga, flash sale, dan iklan berbayar untuk maksimalkan penjualan.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">Shopee</span><span class="pg-card-tag">TikTok</span><span class="pg-card-tag">Flash Sale</span></div>
+      </div>
+    </div>
+
+    <!-- 3: Shopee Optimization -->
+    <div class="pg-card-new reveal" data-cat="ecommerce" data-date="6" onclick="window.location='ecommerce.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#0a2000,#1e4d00,#0a2000);">
+        <div class="pg-card-num">03</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div class="pg-mock-row accent short"></div>
+              <div class="pg-mock-row"></div>
+              <div class="pg-mock-chart">
+                <div class="pg-mock-bar-chart" style="height:30%;background:rgba(234,88,12,0.5);"></div>
+                <div class="pg-mock-bar-chart" style="height:50%;background:rgba(234,88,12,0.5);"></div>
+                <div class="pg-mock-bar-chart" style="height:70%;background:rgba(182,240,0,0.6);"></div>
+                <div class="pg-mock-bar-chart" style="height:90%;background:rgba(182,240,0,0.8);"></div>
+                <div class="pg-mock-bar-chart" style="height:100%;background:rgba(182,240,0,1);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;background:rgba(234,88,12,0.2);">🛍️</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">E-Commerce · Analytics</div>
+        <div class="pg-card-title">Shopee Store Optimization</div>
+        <div class="pg-card-desc">Optimasi menyeluruh toko Shopee: SEO produk, iklan TopAds, flash sale, dan peningkatan rating bintang 5.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">Shopee</span><span class="pg-card-tag">TopAds</span><span class="pg-card-tag">SEO</span></div>
+      </div>
+    </div>
+
+    <!-- 4: AI Plugin -->
+    <div class="pg-card-new reveal reveal-delay-1" data-cat="web" data-date="5" onclick="window.location='project-plugin.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#0a0020,#1a0060,#0a0020);">
+        <div class="pg-card-num">04</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div style="font-size:0.45rem;color:rgba(182,240,0,0.8);font-family:monospace;line-height:1.6;">
+                &gt; AI analyzing...<br>
+                &gt; SEO score: 98/100<br>
+                &gt; Optimizing content...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;background:rgba(99,102,241,0.2);">🤖</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">AI · WordPress Plugin</div>
+        <div class="pg-card-title">AI-Optimized Web Build</div>
+        <div class="pg-card-desc">Plugin WordPress custom dengan integrasi AI — auto-generate konten, optimasi SEO, dan analisis performa real-time.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">ChatGPT</span><span class="pg-card-tag">Midjourney</span><span class="pg-card-tag">WP</span></div>
+      </div>
+    </div>
+
+    <!-- 5: Moodle LMS -->
+    <div class="pg-card-new reveal reveal-delay-2" data-cat="edtech" data-date="4" onclick="window.location='edtech.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#001030,#002060,#001030);">
+        <div class="pg-card-num">05</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div class="pg-mock-row accent medium"></div>
+              <div class="pg-mock-row short"></div>
+              <div class="pg-mock-row medium"></div>
+              <div class="pg-mock-row short"></div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;background:rgba(234,88,12,0.15);">📚</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">EdTech · Moodle</div>
+        <div class="pg-card-title">Moodle LMS Deployment</div>
+        <div class="pg-card-desc">Setup dan konfigurasi Moodle untuk sekolah: kursus, kuis online, absensi digital, dan laporan nilai otomatis.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">Moodle</span><span class="pg-card-tag">PHP</span><span class="pg-card-tag">MySQL</span></div>
+      </div>
+    </div>
+
+    <!-- 6: Landing Page - featured -->
+    <div class="pg-card-new featured reveal" data-cat="web" data-date="3" onclick="window.location='project-landing.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#0f1f35,#1a3a5c,#0d2137);">
+        <div class="pg-card-num">06</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen" style="max-width:420px;">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+              <div style="flex:1;text-align:right;font-size:0.4rem;color:rgba(255,255,255,0.3);font-family:monospace;">bayudev.com</div>
+            </div>
+            <div class="pg-mock-body">
+              <div style="height:12px;border-radius:3px;background:rgba(182,240,0,0.3);margin-bottom:6px;width:70%;"></div>
+              <div class="pg-mock-row short"></div>
+              <div class="pg-mock-row medium"></div>
+              <div style="display:flex;gap:6px;margin-top:8px;">
+                <div style="height:20px;width:60px;border-radius:100px;background:rgba(182,240,0,0.5);"></div>
+                <div style="height:20px;width:50px;border-radius:100px;background:rgba(255,255,255,0.06);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;">✨</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">WordPress · Landing Page · CRO</div>
+        <div class="pg-card-title">Landing Page Profesional Premium</div>
+        <div class="pg-card-desc">Landing page modern dengan animasi scroll, PageSpeed 99, SEO optimal, dan desain premium yang mengkonversi pengunjung menjadi leads secara efektif.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">WordPress</span><span class="pg-card-tag">Elementor</span><span class="pg-card-tag">SEO</span><span class="pg-card-tag">CRO</span></div>
+      </div>
+    </div>
+
+    <!-- 7: E-Book -->
+    <div class="pg-card-new reveal" data-cat="design" data-date="2" onclick="window.location='project-ebook.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#14532d,#15803d,#052e16);">
+        <div class="pg-card-num">07</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div style="height:8px;border-radius:2px;background:rgba(74,222,128,0.4);margin-bottom:5px;"></div>
+              <div class="pg-mock-row short"></div>
+              <div class="pg-mock-row"></div>
+              <div class="pg-mock-row short"></div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;background:rgba(21,128,61,0.2);">📖</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">Design & Media · Digital</div>
+        <div class="pg-card-title">Pembuatan E-Book Interaktif</div>
+        <div class="pg-card-desc">Desain dan produksi e-book profesional dengan layout editorial modern, infografis interaktif, dan distribusi digital via LMS.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">Canva Pro</span><span class="pg-card-tag">PDF Interactive</span><span class="pg-card-tag">Figma</span></div>
+      </div>
+    </div>
+
+    <!-- 8: UMKM -->
+    <div class="pg-card-new reveal reveal-delay-1" data-cat="web" data-date="1" onclick="window.location='project-umkm.html'">
+      <div class="pg-card-thumb" style="background:linear-gradient(135deg,#7c2d12,#9a3412,#431407);">
+        <div class="pg-card-num">08</div>
+        <div class="pg-mock-ui">
+          <div class="pg-mock-screen">
+            <div class="pg-mock-bar">
+              <div class="pg-mock-dot" style="background:#ff5f57;"></div>
+              <div class="pg-mock-dot" style="background:#febc2e;"></div>
+              <div class="pg-mock-dot" style="background:#28c840;"></div>
+            </div>
+            <div class="pg-mock-body">
+              <div style="height:6px;border-radius:2px;background:rgba(251,146,60,0.5);margin-bottom:5px;width:60%;"></div>
+              <div class="pg-mock-row"></div>
+              <div style="display:flex;gap:4px;margin-top:6px;">
+                <div style="height:18px;flex:1;border-radius:4px;background:rgba(255,255,255,0.04);"></div>
+                <div style="height:18px;flex:1;border-radius:4px;background:rgba(255,255,255,0.04);"></div>
+                <div style="height:18px;flex:1;border-radius:4px;background:rgba(182,240,0,0.2);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pg-float-logo" style="font-size:1.4rem;background:rgba(234,88,12,0.15);">🏪</div>
+        <div class="pg-card-overlay"><span class="pg-overlay-btn">Lihat Project</span></div>
+      </div>
+      <div class="pg-card-body">
+        <div class="pg-card-cat">WordPress · UMKM · Bisnis Lokal</div>
+        <div class="pg-card-title">Web Bisnis UMKM WordPress</div>
+        <div class="pg-card-desc">Website bisnis modern untuk UMKM dengan WooCommerce, WhatsApp integration, dan SEO lokal untuk meningkatkan omzet 3×.</div>
+        <div class="pg-card-tags"><span class="pg-card-tag">WordPress</span><span class="pg-card-tag">WooCommerce</span><span class="pg-card-tag">SEO Lokal</span></div>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="pg-empty" id="pgEmpty">
+      <p>Tidak ada project di kategori ini. Pilih kategori lain.</p>
+    </div>
+
+  </div>
 </section>
+
 
 <!-- ===================== ABOUT ===================== -->
 <section id="about">
@@ -2025,6 +2504,49 @@ function handleSubmit(e) {
   btn.textContent = 'Message Sent! ✓';
   btn.style.background = '#34d399';
   setTimeout(() => { btn.innerHTML='Send Message <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>'; btn.style.background=''; e.target.reset(); }, 3000);
+}
+
+// ============================================
+// PORTFOLIO FILTER & SORT
+// ============================================
+function pgFilter(cat, btn) {
+  document.querySelectorAll('.pg-filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('.pg-card-new');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const cardCat = card.dataset.cat;
+    const show = cat === 'all' || cardCat === cat;
+    if (show) {
+      card.style.display = '';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        card.style.transition = 'opacity .4s ease, transform .4s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, visibleCount * 60);
+      visibleCount++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  const empty = document.getElementById('pgEmpty');
+  if (empty) empty.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+function pgSort(value) {
+  const grid = document.getElementById('pgGrid');
+  const cards = Array.from(grid.querySelectorAll('.pg-card-new'));
+  cards.sort((a, b) => {
+    const da = parseInt(a.dataset.date || 0);
+    const db = parseInt(b.dataset.date || 0);
+    return value === 'latest' ? db - da : da - db;
+  });
+  cards.forEach(c => grid.appendChild(c));
 }
 
 // Smooth anchor scroll
